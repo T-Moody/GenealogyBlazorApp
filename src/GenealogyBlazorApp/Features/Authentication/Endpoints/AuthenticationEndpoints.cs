@@ -1,4 +1,6 @@
 using GenealogyBlazorApp.Features.Authentication.Commands;
+using GenealogyBlazorApp.Shared.Features.Authentication.Contracts;
+using GenealogyBlazorApp.Features.Authentication.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 
@@ -28,17 +30,12 @@ public static class AuthenticationEndpoints
 
     private static async Task<IResult> LoginAsync(LoginRequest request, IMediator mediator)
     {
-        if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
-        {
-            return Results.BadRequest(new { success = false, message = "Username and password are required" });
-        }
-
         var command = new LoginCommand(request.Username, request.Password);
         var result = await mediator.Send(command);
 
         if (result.Success)
         {
-            return Results.Ok(new { success = true, message = "Login successful" });
+            return Results.Ok(result);
         }
 
         return Results.Unauthorized();
@@ -49,20 +46,14 @@ public static class AuthenticationEndpoints
         var command = new LogoutCommand();
         var result = await mediator.Send(command);
 
-        return Results.Ok(new { success = result.Success, message = "Logout successful" });
+        return Results.Ok(result);
     }
 
-    private static Task<IResult> GetAuthStatusAsync(HttpContext context)
+    private static async Task<IResult> GetAuthStatusAsync(IMediator mediator)
     {
-        var isAuthenticated = context.User.Identity?.IsAuthenticated == true;
-        var isAdmin = context.User.HasClaim("admin", "true");
+        var query = new GetAuthStatusQuery();
+        var result = await mediator.Send(query);
 
-        return Task.FromResult(Results.Ok(new { 
-            isAuthenticated, 
-            isAdmin,
-            username = context.User.Identity?.Name 
-        }));
+        return Results.Ok(result);
     }
 }
-
-public record LoginRequest(string Username, string Password);

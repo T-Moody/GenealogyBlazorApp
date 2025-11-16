@@ -11,6 +11,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "agents", "agents", "{02EA68
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchestrator", "src\Orchestrator\Orchestrator.csproj", "{56D31EDB-ADB6-7780-1A4B-0350524435F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenealogyBlazorApp.Shared", "src\GenealogyBlazorApp.Shared\GenealogyBlazorApp.Shared.csproj", "{AA9EF19C-6B69-6E82-A9F3-96321529F5B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenealogyBlazorApp.Client.Tests", "tests\GenealogyBlazorApp.Client.Tests\GenealogyBlazorApp.Client.Tests.csproj", "{26E8F16C-C5BA-54CC-3032-FEF3067A7412}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{14712545-DA90-42E3-8E38-CE2EF936D14C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenealogyBlazorApp.Shared.Tests", "tests\GenealogyBlazorApp.Shared.Tests\GenealogyBlazorApp.Shared.Tests.csproj", "{D8BD8E70-4E83-4668-54F2-80BC6F782981}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenealogyBlazorApp.Tests", "tests\GenealogyBlazorApp.Tests\GenealogyBlazorApp.Tests.csproj", "{7AF6E74B-FF87-0371-147A-55D25617A6C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,9 +39,30 @@ Global
 		{56D31EDB-ADB6-7780-1A4B-0350524435F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56D31EDB-ADB6-7780-1A4B-0350524435F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56D31EDB-ADB6-7780-1A4B-0350524435F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA9EF19C-6B69-6E82-A9F3-96321529F5B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA9EF19C-6B69-6E82-A9F3-96321529F5B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA9EF19C-6B69-6E82-A9F3-96321529F5B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA9EF19C-6B69-6E82-A9F3-96321529F5B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26E8F16C-C5BA-54CC-3032-FEF3067A7412}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26E8F16C-C5BA-54CC-3032-FEF3067A7412}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26E8F16C-C5BA-54CC-3032-FEF3067A7412}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26E8F16C-C5BA-54CC-3032-FEF3067A7412}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8BD8E70-4E83-4668-54F2-80BC6F782981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8BD8E70-4E83-4668-54F2-80BC6F782981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8BD8E70-4E83-4668-54F2-80BC6F782981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8BD8E70-4E83-4668-54F2-80BC6F782981}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AF6E74B-FF87-0371-147A-55D25617A6C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AF6E74B-FF87-0371-147A-55D25617A6C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AF6E74B-FF87-0371-147A-55D25617A6C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AF6E74B-FF87-0371-147A-55D25617A6C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{26E8F16C-C5BA-54CC-3032-FEF3067A7412} = {14712545-DA90-42E3-8E38-CE2EF936D14C}
+		{D8BD8E70-4E83-4668-54F2-80BC6F782981} = {14712545-DA90-42E3-8E38-CE2EF936D14C}
+		{7AF6E74B-FF87-0371-147A-55D25617A6C1} = {14712545-DA90-42E3-8E38-CE2EF936D14C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70817ADF-5C1C-4AA1-A26E-53C9BC4B0EE5}

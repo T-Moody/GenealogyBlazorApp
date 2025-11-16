@@ -1,0 +1,91 @@
+@page "/admin/login"
+@rendermode InteractiveAuto
+@using GenealogyBlazorApp.Client.Features.Authentication.Models
+@using GenealogyBlazorApp.Shared.Features.Authentication.Contracts
+@inherits LoginBase
+
+<PageTitle>Admin Login - @SiteName</PageTitle>
+
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div class="row w-100">
+        <div class="col-12 col-md-6 col-lg-4 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h1 class="h4 mb-0">
+                        <i class="fas fa-lock me-2" aria-hidden="true"></i>
+                        Admin Login
+                    </h1>
+                </div>
+                <div class="card-body p-4">
+                    <EditForm Model="@FormModel" OnValidSubmit="@HandleLoginSubmit" FormName="LoginForm">
+                        <DataAnnotationsValidator />
+                        
+                        @if (!string.IsNullOrEmpty(State.ErrorMessage))
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fas fa-exclamation-triangle me-2" aria-hidden="true"></i>
+                                @State.ErrorMessage
+                            </div>
+                        }
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user" aria-hidden="true"></i>
+                                </span>
+                                <InputText @bind-Value="FormModel.Username" 
+                                          class="form-control" 
+                                          id="username" 
+                                          placeholder="Enter username"
+                                          disabled="@State.IsLoading"
+                                          autocomplete="username" />
+                            </div>
+                            <ValidationMessage For="@(() => FormModel.Username)" class="text-danger small" />
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-lock" aria-hidden="true"></i>
+                                </span>
+                                <InputText @bind-Value="FormModel.Password" 
+                                          type="password" 
+                                          class="form-control" 
+                                          id="password" 
+                                          placeholder="Enter password"
+                                          disabled="@State.IsLoading"
+                                          autocomplete="current-password" />
+                            </div>
+                            <ValidationMessage For="@(() => FormModel.Password)" class="text-danger small" />
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" 
+                                    class="btn btn-primary btn-lg"
+                                    disabled="@State.IsLoading">
+                                @if (State.IsLoading)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </span>
+                                    <text>Signing in...</text>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-sign-in-alt me-2" aria-hidden="true"></i>
+                                    <text>Sign In</text>
+                                }
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+                <div class="card-footer text-center text-muted small">
+                    <i class="fas fa-shield-alt me-1" aria-hidden="true"></i>
+                    Secure administrative access
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

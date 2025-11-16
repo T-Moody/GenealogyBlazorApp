@@ -1,52 +1,60 @@
+using GenealogyBlazorApp.Shared.Features.Authentication.Contracts;
+using GenealogyBlazorApp.Features.Authentication.Services;
 using MediatR;
 
 namespace GenealogyBlazorApp.Features.Authentication.Commands;
 
-// Login Command
-public record LoginCommand(string Username, string Password) : IRequest<LoginResult>;
+public record LoginCommand(string Username, string Password) : IRequest<LoginResponse>;
 
-public record LoginResult(bool Success, string? SessionToken = null, string? ErrorMessage = null);
-
-public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResult>
+public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
 {
-    private readonly IAuthenticationService _authService;
+    private readonly IAuthenticationDomainService _authService;
 
-    public LoginCommandHandler(IAuthenticationService authService)
+    public LoginCommandHandler(IAuthenticationDomainService authService)
     {
         _authService = authService;
     }
 
-    public async Task<LoginResult> Handle(LoginCommand request, CancellationToken cancellationToken)
+    public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
+        if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
+        {
+            return new LoginResponse(false, "Username and password are required");
+        }
+
         try
         {
             var result = await _authService.AuthenticateAsync(request.Username, request.Password);
             return result;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            return new LoginResult(false, ErrorMessage: "Authentication failed");
+            return new LoginResponse(false, "An error occurred during authentication");
         }
     }
 }
 
-// Logout Command
-public record LogoutCommand(string? SessionToken = null) : IRequest<LogoutResult>;
+public record LogoutCommand : IRequest<LogoutResponse>;
 
-public record LogoutResult(bool Success);
-
-public class LogoutCommandHandler : IRequestHandler<LogoutCommand, LogoutResult>
+public class LogoutCommandHandler : IRequestHandler<LogoutCommand, LogoutResponse>
 {
-    private readonly IAuthenticationService _authService;
+    private readonly IAuthenticationDomainService _authService;
 
-    public LogoutCommandHandler(IAuthenticationService authService)
+    public LogoutCommandHandler(IAuthenticationDomainService authService)
     {
         _authService = authService;
     }
 
-    public async Task<LogoutResult> Handle(LogoutCommand request, CancellationToken cancellationToken)
+    public async Task<LogoutResponse> Handle(LogoutCommand request, CancellationToken cancellationToken)
     {
-        await _authService.SignOutAsync();
-        return new LogoutResult(true);
+        try
+        {
+            await _authService.SignOutAsync();
+            return new LogoutResponse(true);
+        }
+        catch (Exception)
+        {
+            return new LogoutResponse(false);
+        }
     }
 }

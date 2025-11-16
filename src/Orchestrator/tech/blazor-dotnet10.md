@@ -12,6 +12,7 @@
 - Unit test all handlers, services, and components.
 - Clear code paths, no `continue`, minimal nesting, descriptive method names.
 - Bootstrap 5 and semantic HTML for UI.
+- **CRITICAL**: All interactive components MUST be placed in the Client project for Interactive Auto mode.
 
 ## Summary
 
@@ -25,9 +26,9 @@ This profile defines how to implement features using:
 
 ## Solution Structure
 
-- `BlazorWebApp` – server host (Minimal APIs, DI root)
-- `BlazorWebApp.Client` – Blazor client
-- `BlazorWebApp.Shared` – shared DTOs, API contracts, services
+- `GenealogyBlazorApp` – server host (Minimal APIs, DI root, static components only)
+- `GenealogyBlazorApp.Client` – Blazor client (ALL interactive components go here)
+- `GenealogyBlazorApp.Shared` – shared DTOs, API contracts, services
 - `Domain` – core domain logic
 - `Infrastructure` – EF Core, persistence, external systems
 
@@ -37,12 +38,10 @@ This profile defines how to implement features using:
 
 - Use **vertical slice architecture**, grouped by feature:
 
-  - `Features/TaskManagement`
-  - `Features/Auth`
-  - `Features/Reporting`
-  - etc.
+  - Server: `Features/TaskManagement` (APIs, services, data access)
+  - Client: `Features/TaskManagement` (interactive components, client services)
 
-- Use **Minimal APIs** for HTTP endpoints in `BlazorWebApp`.
+- Use **Minimal APIs** for HTTP endpoints in `GenealogyBlazorApp`.
 - Use **Entity Framework Core** in `Infrastructure` when persistence is required.
 - Use **code-behind** for all components:
 
@@ -59,6 +58,27 @@ This profile defines how to implement features using:
 
 ---
 
+## Component Placement Rules (CRITICAL)
+
+**Server Project (`GenealogyBlazorApp`):**
+- Static components only (layouts, error pages, non-interactive content)
+- Minimal APIs endpoints
+- Server-side services and business logic
+- Database context and infrastructure
+
+**Client Project (`GenealogyBlazorApp.Client`):**
+- **ALL interactive components** (forms, admin interfaces, dynamic content)
+- Client-side state management
+- API client services
+- Interactive pages and features
+
+**Why:** Interactive Auto mode requires components to be in the Client project so they can:
+- Start with Server Interactive rendering
+- Seamlessly transition to WebAssembly when downloaded
+- Maintain state across rendering mode transitions
+
+---
+
 ## Blazor Interactive Auto & State
 
 - Assume **Blazor Interactive Auto**: prerender + server interactive + potential WASM takeover.
@@ -68,19 +88,15 @@ This profile defines how to implement features using:
 
 - Decorate persistent state models with `[PersistentState]`.
 - In lifecycle methods (e.g., `OnInitializedAsync`), always guard against double-load:
+protected override async Task OnInitializedAsync()
+{
+    if (State is not null)
+    {
+        return;
+    }
 
-  ```csharp
-  protected override async Task OnInitializedAsync()
-  {
-      if (State is not null)
-      {
-          return;
-      }
-
-      // Initial load logic...
+    // Initial load logic...
   }
-  ```
-
 - Keep state models in separate `*State.cs` files (not nested inside components).
 
 ---
@@ -109,7 +125,7 @@ This profile defines how to implement features using:
   - Entities, value objects, domain services, business rules.
 - `Infrastructure`:
   - EF Core DbContext, configurations, repositories (if used).
-- `BlazorWebApp.Shared`:
+- `GenealogyBlazorApp.Shared`:
   - DTOs, API contracts, and interfaces for API client services.
   - Abstractions for services that must work in both Server Interactive and WASM modes (e.g. `ITaskApiClient`).
 
@@ -119,9 +135,9 @@ This profile defines how to implement features using:
 
 - Unit test:
   - Domain logic (`Domain.Tests`)
-  - Services & vertical slice logic (`BlazorWebApp.Tests`, `Infrastructure.Tests`)
+  - Services & vertical slice logic (`GenealogyBlazorApp.Tests`, `Infrastructure.Tests`)
 - Component tests:
-  - Use bUnit (in `BlazorWebApp.Client.Tests`) when relevant.
+  - Use bUnit (in `GenealogyBlazorApp.Client.Tests`) when relevant.
 - Focus tests on behavior and contracts, not implementation details.
 
 ---
@@ -133,14 +149,10 @@ This profile defines how to implement features using:
 - **Do not** use `continue` in loops.
 - Always use braces, even for single-line `if` / `else`.
 - Use `var` **only** when the type is obvious from the right-hand side:
-
-  ```csharp
-  var count = 0;
-  var person = new Person();
-  // But:
-  Customer result = GetCustomer();
-  ```
-
+var count = 0;
+var person = new Person();
+// But:
+Customer result = GetCustomer();
 - Use file-scoped namespaces.
 - Keep logical blocks separated by empty lines for readability.
 
@@ -185,11 +197,14 @@ This profile defines how to implement features using:
 
 When generating Blazor / .NET 10 code in this repo:
 
-1. Use **vertical slice** by feature (`Features/<FeatureName>`).
-2. Use **Minimal APIs** for endpoints in `BlazorWebApp`.
-3. Use **EF Core** in `Infrastructure` for DB interactions when persistence is needed.
-4. Use `.razor` + `.razor.cs` with separate `*State.cs` state models and `[PersistentState]`.
-5. One class/interface per file.
-6. No `@code` blocks.
-7. Follow the C# style rules above (early returns, no `continue`, careful `var` usage).
-8. Keep UI simple, accessible, and easy to maintain.
+1. Use **vertical slice** by feature with proper project placement:
+   - Server: `GenealogyBlazorApp/Features/<FeatureName>` (APIs, services, data)
+   - Client: `GenealogyBlazorApp.Client/Features/<FeatureName>` (interactive components)
+2. **ALL interactive components go in the Client project**
+3. Use **Minimal APIs** for endpoints in `GenealogyBlazorApp`.
+4. Use **EF Core** in `Infrastructure` for DB interactions when persistence is needed.
+5. Use `.razor` + `.razor.cs` with separate `*State.cs` state models and `[PersistentState]`.
+6. One class/interface per file.
+7. No `@code` blocks.
+8. Follow the C# style rules above (early returns, no `continue`, careful `var` usage).
+9. Keep UI simple, accessible, and easy to maintain.
