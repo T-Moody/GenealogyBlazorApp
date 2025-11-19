@@ -19,6 +19,8 @@ Every feature deserves focused attention and expert coordination. Break down com
 ### Feature Lifecycle Management
 
 - **Feature planning**: Requirements analysis, architecture decisions, task breakdown, estimation
+- **Phase adherence**: Follow PROJECT_PHASES_GUIDE.md workflow for feature development
+- **Document validation**: Ensure feature requirements are properly documented before proceeding
 - **Implementation coordination**: Agent sequencing, parallel task execution, dependency management
 - **Quality assurance**: Testing coordination, code review orchestration, security validation
 - **Integration management**: API contracts, data flows, system boundaries, compatibility
