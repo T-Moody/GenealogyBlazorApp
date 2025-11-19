@@ -1,4 +1,5 @@
 using GenealogyBlazorApp.Domain.Entities;
+using GenealogyBlazorApp.Infrastructure.Data;
 using GenealogyBlazorApp.Shared.Features.Authentication.Contracts;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -19,10 +20,10 @@ public interface IAuthenticationDomainService
 
 public class AuthenticationDomainService : IAuthenticationDomainService
 {
-    private readonly AuthDbContext _dbContext;
+    private readonly GenealogyDbContext _dbContext;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public AuthenticationDomainService(AuthDbContext dbContext, IHttpContextAccessor httpContextAccessor)
+    public AuthenticationDomainService(GenealogyDbContext dbContext, IHttpContextAccessor httpContextAccessor)
     {
         _dbContext = dbContext;
         _httpContextAccessor = httpContextAccessor;
@@ -71,8 +72,23 @@ public class AuthenticationDomainService : IAuthenticationDomainService
 
     private async Task UpdateLastLoginAsync(AdminUser user)
     {
-        user.LastLoginDate = DateTime.UtcNow;
+        user.LastLoginAt = DateTime.UtcNow;
+        user.LastLoginIp = GetClientIpAddress();
         await _dbContext.SaveChangesAsync();
+    }
+
+    private string? GetClientIpAddress()
+    {
+        var httpContext = _httpContextAccessor.HttpContext;
+        if (httpContext == null) return null;
+
+        var xForwardedFor = httpContext.Request.Headers["X-Forwarded-For"];
+        if (!string.IsNullOrEmpty(xForwardedFor))
+        {
+            return xForwardedFor.ToString().Split(',')[0].Trim();
+        }
+
+        return httpContext.Connection.RemoteIpAddress?.ToString();
     }
 
     private async Task CreateUserSessionAsync(AdminUser user)

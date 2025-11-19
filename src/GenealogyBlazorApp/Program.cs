@@ -3,6 +3,7 @@ using GenealogyBlazorApp.Components;
 using GenealogyBlazorApp.Features.Authentication.Authorization;
 using GenealogyBlazorApp.Features.Authentication.Endpoints;
 using GenealogyBlazorApp.Features.Authentication.Services;
+using GenealogyBlazorApp.Features.Counties.Endpoints;
 using GenealogyBlazorApp.Infrastructure.Data;
 using GenealogyBlazorApp.Shared.Features.Authentication.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -78,8 +79,9 @@ app.UseAntiforgery();
 
 app.MapStaticAssets();
 
-// Map Authentication API endpoints
+// Map API endpoints
 app.MapAuthenticationEndpoints();
+app.MapCountiesEndpoints();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()

@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenealogyBlazorApp.Client",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "agents", "agents", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchestrator", "src\Orchestrator\Orchestrator.csproj", "{56D31EDB-ADB6-7780-1A4B-0350524435F3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenealogyBlazorApp.Shared", "src\GenealogyBlazorApp.Shared\GenealogyBlazorApp.Shared.csproj", "{AA9EF19C-6B69-6E82-A9F3-96321529F5B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenealogyBlazorApp.Client.Tests", "tests\GenealogyBlazorApp.Client.Tests\GenealogyBlazorApp.Client.Tests.csproj", "{26E8F16C-C5BA-54CC-3032-FEF3067A7412}"
@@ -35,10 +33,6 @@ Global
 		{1E6EE5BD-9DDB-3BE6-63BB-4BA32346F428}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E6EE5BD-9DDB-3BE6-63BB-4BA32346F428}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E6EE5BD-9DDB-3BE6-63BB-4BA32346F428}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56D31EDB-ADB6-7780-1A4B-0350524435F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56D31EDB-ADB6-7780-1A4B-0350524435F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56D31EDB-ADB6-7780-1A4B-0350524435F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56D31EDB-ADB6-7780-1A4B-0350524435F3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA9EF19C-6B69-6E82-A9F3-96321529F5B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA9EF19C-6B69-6E82-A9F3-96321529F5B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA9EF19C-6B69-6E82-A9F3-96321529F5B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
