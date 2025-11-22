@@ -39,6 +39,10 @@
     --border-double: 3px double var(--color-parchment-border);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: var(--color-parchment);
     color: var(--color-ink);

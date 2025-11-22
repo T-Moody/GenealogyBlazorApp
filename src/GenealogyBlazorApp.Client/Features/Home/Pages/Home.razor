@@ -26,9 +26,13 @@ else
             
             <h1 class="hero-title">@content.SiteTitle</h1>
             <p class="hero-tagline">@content.Tagline</p>
+            
+            <div class="scroll-indicator">
+                <a href="#content-start" class="scroll-icon" aria-label="Scroll to content">❧</a>
+            </div>
         </div>
 
-        <div class="row">
+        <div class="row" id="content-start">
             <div class="col-md-8">
                 <div class="card-vintage mb-4">
                     <div class="card-vintage-header">
