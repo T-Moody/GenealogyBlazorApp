@@ -1,246 +1,150 @@
-# GitHub Copilot Custom Instructions - Eidos Ontology Builder
+# GitHub Copilot Repository Instructions
 
 ## Project Overview
 
-**Eidos** is a Blazor-based ontology and knowledge graph builder using Entity Framework Core, ASP.NET Core, and SignalR. The application enables collaborative ontology editing with real-time features, comprehensive CRUD operations, and export capabilities.
+- This is a **.NET 9 Blazor Web App (Blazor United / Auto render mode)**.
+- Solution structure:
+  - `GenealogyBlazorApp`          → Server/host project (root App, layouts, endpoints, infrastructure wiring)
+  - `GenealogyBlazorApp.Client`   → Interactive Blazor components/pages (InteractiveAuto / InteractiveWebAssembly)
+  - `GenealogyBlazorApp.Shared`   → Shared contracts (DTOs, results, basic abstractions, maybe shared enums)
 
-## Development Approach
+- Purpose: A data-driven genealogy helper site with:
+  - Public pages (home, tutorials, resources)
+  - Admin-style pages for managing tutorials, resources, categories, homepage content
 
-### Agent-Based Development System
+---
 
-This project uses a **three-tier orchestration system** for coordinated development:
+## Architecture Guidelines
 
-#### 1. Project Level
+### Server project: `GenealogyBlazorApp`
 
-- **project-orchestrator**: Manages entire project lifecycle, cross-feature dependencies, and stakeholder communication
+- Treat this as the **host + composition root**.
+- Responsibilities:
+  - Root component and layout shell:
+    - `Components/App.razor`   → top-level router and render mode setup
+    - `Components/Layout/MainLayout.razor`
+    - `Components/Layout/NavMenu.razor` (and other shared layout components)
+  - Minimal API endpoints, grouped by feature:
+    - Example: `Features/Home/Endpoints`, `Features/Tutorials/Endpoints`, etc.
+  - Infrastructure wiring:
+    - Dependency injection
+    - EF Core `AppDbContext`, migrations
+    - Logging, configuration
+- SSR-only / simple pages can live here under `Components/Pages` if they don’t need interactive client behavior.
 
-#### 2. Feature Level
+### Client project: `GenealogyBlazorApp.Client`
 
-- **feature-orchestrator**: Coordinates individual features from planning through deployment
+- This is where **interactive Blazor content lives**.
+- Use **Blazor United InteractiveAuto** (or other interactive render modes) on components/pages that need it.
+- Organize code **by feature (vertical slice)**:
+  - Example:
+    - `Features/Home`
+    - `Features/Tutorials`
+    - `Features/Resources`
+    - `Features/Categories`
+- Inside a feature, prefer:
+  - `Pages/`      → Blazor pages/components (e.g., `Index.razor`, `List.razor`, `Editor.razor`)
+  - `Models/`     → View models, UI DTOs (or feature-local DTOs that map to Shared contracts)
+  - `Services/`   → Feature-specific client-side services for calling server endpoints (optional)
+- Interactive pages should:
+  - Use `@rendermode="InteractiveAuto"` (or equivalent) where appropriate.
+  - Call server endpoints defined in `GenealogyBlazorApp` and consume DTOs from `GenealogyBlazorApp.Shared`.
 
-#### 3. Workflow Level
+### Shared project: `GenealogyBlazorApp.Shared`
 
-- **01-requirements-agent**: Requirements analysis and validation
-- **02-planning-agent**: Implementation planning and task breakdown
-- **03-development-agent**: Development coordination and integration
-- **04-testing-agent**: Testing orchestration and quality validation
-- **05-review-agent**: Review coordination and quality gates
-- **06-documentation-agent**: Documentation coordination and publication
+- Hold cross-project types:
+  - DTOs used by both server and client (`HomeDto`, `TutorialDto`, `ResourceDto`, `CategoryDto`, etc.).
+  - Common result wrappers, e.g. `ApiResult`, pagination models.
+  - Shared enums or basic abstractions.
+  - Shared services to handle the switch between SSR and Web Assembly (example: ISharedHomeService)
+- Avoid putting business logic here; keep it for **contracts**, not behavior.
 
-#### 4. Specialist Level
+---
 
-- **backend-architect**: System architecture and API design
-- **dotnet-data-specialist**: Data access and Entity Framework
-- **blazor-developer**: Blazor components and UI implementation
-- **dotnet-security-specialist**: Security implementation and validation
-- **blazor-accessibility-performance-specialist**: Accessibility and performance optimization
-- **supportability-lifecycle-specialist**: Operations, monitoring, and lifecycle management
-- **documentation-specialist**: Technical writing and documentation
-- **ui-design-specialist**: UI/UX design and styling
-- **requirements-architect**: Requirements analysis and business logic
+## Patterns & Practices
 
-## Architecture & Technology Stack
+- Favor **Vertical Slice Architecture**:
+  - Group by feature (Home, Tutorials, Resources, Categories), not by generic layers.
+  - A “slice” spans:
+    - Server: endpoints + handlers
+    - Shared: DTOs/contracts
+    - Client: interactive pages/components that consume those endpoints
+- Use **MediatR-style commands/queries and handlers** (or similar pattern) on the server for application logic:
+  - `Commands/`, `Queries/`, `Handlers/` inside a feature folder.
+- Use **FluentValidation** for validating commands/queries on the server.
+- EF Core:
+  - Single `AppDbContext` for the app.
+  - Helpful extension methods on `DbSet` / `IQueryable` where reuse is clear (e.g. `FindByIdAsync`, paging, filters).
 
-### Core Technologies
+---
 
-- **Backend**: ASP.NET Core 8.0, Entity Framework Core, SignalR
-- **Frontend**: Blazor Server with Bootstrap 5, Chart.js, Font Awesome
-- **Database**: SQL Server (production), SQLite (development)
-- **Authentication**: ASP.NET Core Identity with role-based authorization
-- **Real-time**: SignalR for collaborative editing and presence indicators
-- **Testing**: xUnit, FluentAssertions (157+ tests, 100% passing)
+## Coding Practices
 
-### Key Patterns
+- Use **clean code**:
+  - Descriptive names
+  - Small, focused methods and components
+  - Avoid “god services” and giant multi-purpose classes
+  - Code should be self-explanatory; minimal comments
+  - One class per file
+  - Only use var when return types are clear
+  - Avoid deep nesting
+  - Avoid using continue
+  - Single purpose methods that describe the code
+- Use **async/await** for all I/O.
+- Prefer **constructor injection** for dependencies.
+- Enable and respect **nullable reference types**.
+- Use **record types** for DTOs and messages when appropriate.
 
-- **Repository Pattern**: For data access abstraction
-- **Service Layer**: Business logic separation with interfaces
-- **Component-Based Architecture**: Reusable Blazor components
-- **Real-time Collaboration**: SignalR hubs for live updates
-- **Responsive Design**: Mobile-first Bootstrap implementation
-- **Role-Based Security**: Admin/User roles with feature-level permissions
+---
 
-## Development Standards
+## Blazor Guidelines
 
-### Code Style
+### Server (Layouts & Shell)
 
-- **C# Conventions**: PascalCase for public members, camelCase for private
-- **Component Structure**: One component per file, clear separation of concerns
-- **Dependency Injection**: Constructor injection, interface-based services
-- **Error Handling**: Custom exceptions with context, global exception middleware
-- **Logging**: Structured logging with ILogger, correlation IDs for tracking
-- **Testing**: Unit tests for business logic, integration tests for data layer
+- `Components/App.razor`:
+  - Hosts the router and sets up render modes.
+- `Components/Layout/MainLayout.razor`, `NavMenu.razor`, etc.:
+  - Define the global layout/shell (header, nav, footer, sidebar).
+  - These live in the **server project**, even if the inner content is interactive.
 
-### Database Patterns
+### Client (Interactive Features)
 
-- **Entity Conventions**: PascalCase properties, Id suffix for primary keys
-- **Relationships**: Explicit foreign key properties, navigation properties
-- **Migrations**: Descriptive names, include sample data where appropriate
-- **Indexes**: Performance-critical queries have appropriate indexes
-- **Constraints**: Use data annotations and Fluent API for validation
+- Put all interactive feature pages/components in `GenealogyBlazorApp.Client`.
+- Use `@rendermode="InteractiveAuto"` (or equivalent) for interactive routes.
+- Components:
+  - One component per file.
+  - `[Parameter]` properties with clear, explicit names.
+  - Prefer async event handlers, e.g. `async Task OnSaveAsync()`.
+- Styling:
+  - Use a consistent styling approach (e.g., Bootstrap or utility classes).
+  - Keep styling simple and maintainable.
 
-### Blazor Component Guidelines
+---
 
-- **State Management**: Use cascading values for shared state
-- **Event Handling**: Prefer async event handlers
-- **Parameter Validation**: Validate component parameters
-- **Lifecycle**: Proper disposal of resources and event subscriptions
-- **CSS**: Component-scoped CSS where possible
+## Testing
 
-## Key Features & Functionality
+- Use **xUnit** for unit tests.
+- Use **bUnit** for Blazor UI tests (Client).
+- Organize tests by project and feature:
+  - `tests/GenealogyBlazorApp.UnitTests/Features/...` (server-side handlers, validators, etc.)
+  - `tests/GenealogyBlazorApp.Client.Tests/Features/...` (Blazor components/pages)
+- When adding new behavior:
+  1. Add or update tests (prefer TDD where reasonable).
+  2. Implement or modify the feature (endpoints, handlers, pages).
+  3. Run `dotnet test` and ensure everything passes.
 
-### Core Features
-
-1. **Concept Management**: CRUD operations with hierarchical relationships
-2. **Relationship Management**: Define and visualize concept relationships
-3. **Real-time Collaboration**: Live editing with user presence indicators
-4. **Export Functionality**: Multiple format support (RDF, JSON-LD, etc.)
-5. **Search & Navigation**: Full-text search with advanced filtering
-6. **User Management**: Registration, authentication, role-based access
-7. **Audit Trail**: Complete change tracking and history
-8. **Responsive UI**: Mobile-friendly design with accessibility support
-9. **Batch Operations**: Bulk concept and relationship management
-10. **Performance Optimization**: Caching, lazy loading, pagination
-
-### Database Schema (Key Entities)
-
-```csharp
-- Concept: Id, Name, Description, CreatedAt, UpdatedAt, UserId
-- Relationship: Id, ConceptId, RelatedConceptId, RelationshipType, UserId
-- User: AspNetCore Identity with custom properties
-- UserPresence: Real-time user activity tracking
-- AuditLog: Change tracking and history
-```
+---
 
 ## Development Workflow
 
-### Development Ledger Integration
+- Typical workflow for a new feature (e.g. Home page slice):
+  1. Define/update DTOs in `GenealogyBlazorApp.Shared`.
+  2. Add server-side query/command, handler, and endpoint under `GenealogyBlazorApp/Features/<FeatureName>`.
+  3. Add client-side page/components under `GenealogyBlazorApp.Client/Features/<FeatureName>`.
+  4. Wire up the Blazor route and render mode.
+  5. Add/update unit tests (handlers, validators) and bUnit tests (components).
+  6. Run `dotnet build` and `dotnet test`.
 
-- **Location**: `/DEVELOPMENT_LEDGER.md` (project root)
-- **Purpose**: Single source of truth for project evolution
-- **Update Frequency**: After each significant change or decision
-- **Sections**: Current Status, Decision Log, Feature Log, Technical Debt, Architecture Evolution
-
-### Quality Standards
-
-- **Definition of Done**: Tests pass, code reviewed, documentation updated, ledger updated
-- **Code Review**: Minimum 1 approval, all checks pass, link to work item
-- **Testing Requirements**: Unit tests for business logic, integration tests for data operations
-- **Security**: Input validation, authorization checks, SQL injection prevention
-- **Performance**: Response times < 200ms, efficient queries, appropriate caching
-
-## File Organization
-
-### Project Structure
-
-```
-eidos/
-├── Components/           # Blazor components
-│   ├── Account/         # Authentication components
-│   ├── Layout/          # Layout components
-│   ├── Ontology/        # Core ontology components
-│   ├── Pages/           # Page components
-│   └── Shared/          # Shared UI components
-├── Data/                # Data access layer
-│   └── Repositories/    # Repository implementations
-├── Models/              # Entity models and DTOs
-├── Services/            # Business logic services
-├── Hubs/               # SignalR hubs
-├── Middleware/         # Custom middleware
-├── wwwroot/            # Static assets
-└── DEVELOPMENT_LEDGER.md
-```
-
-## When Working on This Project
-
-### Always Consider
-
-1. **Real-time Impact**: How changes affect SignalR functionality
-2. **Performance**: Database query efficiency and response times
-3. **Security**: Authorization, input validation, data protection
-4. **Accessibility**: Screen readers, keyboard navigation, ARIA labels
-5. **Mobile Experience**: Responsive design and touch interactions
-6. **Testing**: Add appropriate test coverage for new functionality
-
-### Before Making Changes
-
-1. Check **DEVELOPMENT_LEDGER.md** for context and recent decisions
-2. Understand existing patterns and conventions
-3. Consider impact on real-time collaboration features
-4. Verify changes don't break existing functionality
-5. Plan appropriate test coverage
-
-### After Making Changes
-
-1. Update **DEVELOPMENT_LEDGER.md** with decisions and changes
-2. Ensure tests pass and add new tests as needed
-3. Update documentation if public APIs changed
-4. Consider performance impact and optimization opportunities
-
-## Common Patterns to Follow
-
-### API Endpoints
-
-```csharp
-[Authorize]
-[Route("api/[controller]")]
-public class ConceptsController : ControllerBase
-{
-    // Standard CRUD pattern with proper HTTP methods
-    // Include authorization attributes
-    // Return appropriate HTTP status codes
-    // Handle exceptions gracefully
-}
-```
-
-### Service Classes
-
-```csharp
-public class ConceptService : IConceptService
-{
-    // Constructor injection for dependencies
-    // Async methods where appropriate
-    // Proper exception handling
-    // Logging for important operations
-}
-```
-
-### Blazor Components
-
-```razor
-@* Clear component structure *@
-@* Proper parameter validation *@
-@* Async event handlers *@
-@* Component-scoped CSS when possible *@
-```
-
-## Integration Points
-
-### External Systems
-
-- **None currently**: Self-contained application
-- **Future**: Consider integration patterns when adding external dependencies
-
-### Key Services
-
-- **ConceptService**: Core business logic for concept management
-- **RelationshipService**: Handles concept relationships
-- **UserPresenceService**: Manages real-time user presence
-- **ExportService**: Handles various export formats
-
-## Testing Strategy
-
-### Test Types
-
-- **Unit Tests**: Business logic in services
-- **Integration Tests**: Database operations and repositories
-- **Component Tests**: Blazor component functionality
-- **End-to-End Tests**: Critical user workflows
-
-### Test Patterns
-
-- Arrange-Act-Assert pattern
-- Use FluentAssertions for readable assertions
-- Mock external dependencies
-- Test both success and failure scenarios
-
-This context will help Copilot understand the project structure, patterns, and development approach to provide more relevant and consistent suggestions.
+- When in doubt:
+  - Prefer **feature-based organization** over scattered layers.
+  - Prefer **simplicity and clarity** over premature abstraction.

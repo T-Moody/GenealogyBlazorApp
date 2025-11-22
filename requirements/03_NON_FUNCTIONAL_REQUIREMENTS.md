@@ -1,114 +1,119 @@
-# Non-Functional Requirements - Blazor Interactive Auto App
+# Non-Functional Requirements - Thumb of Michigan Genealogy
 
 ## Document Information
-**Project Name**: Blazor Interactive Auto App - Genealogy Resource Platform  
+**Project Name**: Thumb of Michigan Genealogy  
 **Document Type**: Non-Functional Requirements Specification  
 **Version**: 1.0  
-**Date**: [TO BE FILLED]  
-**Status**: DRAFT - Awaiting User Completion  
+**Date**: November 21, 2025  
+**Status**: Phase 1 Complete  
 
 ---
 
 ## 1. Performance Requirements
 
 ### 1.1 Response Time Requirements
-[TO BE FILLED BY USER] - Define acceptable performance levels
 
 | Operation | Target Response Time | Maximum Acceptable | Measurement Conditions |
 |-----------|---------------------|-------------------|----------------------|
-| Page Load (Initial) | [TO BE FILLED] ms | [TO BE FILLED] ms | [TO BE FILLED] |
-| County Selection | [TO BE FILLED] ms | [TO BE FILLED] ms | [TO BE FILLED] |
-| Resource Search | [TO BE FILLED] ms | [TO BE FILLED] ms | [TO BE FILLED] |
-| Admin Operations | [TO BE FILLED] ms | [TO BE FILLED] ms | [TO BE FILLED] |
-| File Upload | [TO BE FILLED] ms | [TO BE FILLED] ms | [TO BE FILLED] |
+| Page Load (Initial) | < 2000 ms | < 3000 ms | First contentful paint, broadband connection |
+| County Selection | < 500 ms | < 1000 ms | County page navigation, cached resources |
+| Resource Search | < 800 ms | < 1500 ms | Full-text search across all resources |
+| Admin Operations | < 1000 ms | < 2000 ms | Content creation/editing, authenticated |
+| File Upload | < 5000 ms | < 10000 ms | Image uploads up to 5MB |
+| Theme Toggle | < 300 ms | < 500 ms | Light/dark mode switching |
+| Tutorial Video Load | < 3000 ms | < 5000 ms | YouTube embed initialization |
 
 ### 1.2 Throughput Requirements
-[TO BE FILLED BY USER]
-- **Concurrent Users**: Support for [TO BE FILLED] simultaneous users
-- **Peak Load**: Handle [TO BE FILLED] concurrent sessions during peak usage
-- **Transaction Volume**: Process [TO BE FILLED] operations per minute
+- **Concurrent Users**: Support for 50 simultaneous users initially, scale to 100+
+- **Peak Load**: Handle 25 concurrent sessions during evening peak hours (7-10 PM)
+- **Transaction Volume**: Process 500+ page requests per hour during peak usage
+- **Admin Capacity**: 1-3 concurrent admin users performing content management
+- **Search Operations**: 100+ search queries per hour without performance degradation
 
 ### 1.3 Resource Usage
-[TO BE FILLED BY USER]
-- **Memory Usage**: Application should use no more than [TO BE FILLED] MB RAM
-- **Storage Requirements**: Initial storage needs of [TO BE FILLED] GB
-- **Bandwidth**: Average bandwidth usage of [TO BE FILLED] per user session
+- **Memory Usage**: Application baseline 256MB RAM, maximum 1GB under peak load
+- **Storage Requirements**: Initial 2GB (database 500MB, images 1GB, logs 500MB)
+- **Database Growth**: Estimate 100MB per year (1000+ resources, 100+ tutorials)
+- **Bandwidth**: Average 2MB per user session, 5MB for video-heavy sessions
+- **CDN Requirements**: Static assets <100MB initially, images optimized for web
 
 ---
 
 ## 2. Scalability Requirements
 
 ### 2.1 User Growth
-[TO BE FILLED BY USER]
-- **Initial Users**: Expected [TO BE FILLED] users at launch
-- **Growth Projection**: Anticipated growth to [TO BE FILLED] users within [time period]
-- **Peak Usage Patterns**: [TO BE FILLED - describe usage patterns]
+- **Initial Users**: Expected 100 users at launch (local genealogy community)
+- **Growth Projection**: Anticipated growth to 500 users within 6 months, 2000 within 2 years
+- **Peak Usage Patterns**: Evening hours (7-10 PM), winter months (genealogy research season), weekends
+- **Geographic Distribution**: Primary Michigan Thumb region, secondary Michigan statewide, tertiary nationwide
 
 ### 2.2 Data Growth
-[TO BE FILLED BY USER]
-- **Content Growth**: Expected [TO BE FILLED] counties and [TO BE FILLED] resources initially
-- **Growth Rate**: Anticipate adding [TO BE FILLED] new resources per month
-- **File Storage Growth**: Expect [TO BE FILLED] GB growth per year
+- **Content Growth**: Expected 3 counties, 200+ resources initially, 50+ tutorials at launch
+- **Growth Rate**: Anticipate adding 20-30 new resources per month, 5-10 tutorials per month
+- **File Storage Growth**: Expect 500MB growth per year (images, documents, backups)
+- **Database Growth**: Estimate 50MB per year for content data
 
 ### 2.3 Geographic Distribution
-[TO BE FILLED BY USER]
-- **Geographic Scope**: Serving users in [TO BE FILLED - regions/countries]
-- **Language Requirements**: [TO BE FILLED - single/multiple languages]
+- **Geographic Scope**: Serving users primarily in Michigan, USA, with global accessibility
+- **Language Requirements**: English only initially, potential for multilingual support in future
+- **Timezone Considerations**: Eastern Time Zone focus for maintenance windows
 
 ---
 
 ## 3. Availability & Reliability Requirements
 
 ### 3.1 Availability Targets
-[TO BE FILLED BY USER]
-- **Uptime SLA**: [TO BE FILLED]% availability (e.g., 99.5% = ~43 hours downtime/year)
-- **Planned Maintenance**: Maximum [TO BE FILLED] hours per month during [time window]
-- **Critical Operations**: Admin functions must be available [TO BE FILLED]% of time
+- **Uptime SLA**: 99.5% availability (~43 hours downtime per year)
+- **Planned Maintenance**: Maximum 4 hours per month during low-usage periods (2-6 AM ET)
+- **Critical Operations**: Admin functions must be available 98% of time (higher tolerance for admin downtime)
+- **Public Site**: Must maintain 99.5% uptime for public-facing content
 
 ### 3.2 Disaster Recovery
-[TO BE FILLED BY USER]
-- **Recovery Time Objective (RTO)**: System must be restored within [TO BE FILLED] hours
-- **Recovery Point Objective (RPO)**: Acceptable data loss of [TO BE FILLED] hours max
-- **Backup Requirements**: [TO BE FILLED - backup frequency and retention]
+- **Recovery Time Objective (RTO)**: System must be restored within 4 hours for full functionality
+- **Recovery Point Objective (RPO)**: Acceptable data loss of maximum 24 hours
+- **Backup Requirements**: Daily automated database backups, weekly full system backups, 30-day retention
+- **Backup Testing**: Monthly restore testing to verify backup integrity
 
 ### 3.3 Error Handling
-[TO BE FILLED BY USER]
-- **Error Rate**: Less than [TO BE FILLED]% of requests should result in errors
-- **Graceful Degradation**: [TO BE FILLED - how should system behave under load]
-- **User Experience**: Error messages should be [TO BE FILLED - user-friendly requirements]
+- **Error Rate**: Less than 2% of requests should result in errors under normal load
+- **Graceful Degradation**: Search functionality may slow, vintage theme effects may be disabled under high load
+- **User Experience**: Error messages should be friendly and provide clear next steps or alternatives
 
 ---
 
 ## 4. Security Requirements
 
 ### 4.1 Authentication & Authorization
-[TO BE FILLED BY USER]
-- **Admin Authentication**: [TO BE FILLED - method, strength requirements]
+- **Admin Authentication**: Cookie-based authentication using ASP.NET Core Identity
 - **Session Security**: 
-  - Session timeout: [TO BE FILLED] minutes of inactivity
-  - Session management: [TO BE FILLED - requirements]
-- **Password Policy**: [TO BE FILLED - complexity, expiration, history]
+  - Session timeout: 120 minutes of inactivity with sliding expiration
+  - Secure cookies with HttpOnly, Secure, and SameSite=Strict flags
+  - Maximum 3 concurrent sessions per admin user
+- **Password Policy**: Minimum 8 characters, mixed case, numbers, special characters, no password expiration
+- **Failed Login Protection**: 5 failed attempts = 15 minute account lockout
+- **Multi-Factor Authentication**: Not required initially, planned for future enhancement
 
 ### 4.2 Data Protection
-[TO BE FILLED BY USER]
 - **Data Encryption**: 
-  - In transit: [TO BE FILLED - TLS version, requirements]
-  - At rest: [TO BE FILLED - encryption requirements]
-- **PII Protection**: [TO BE FILLED - personal information handling]
-- **Data Retention**: [TO BE FILLED - how long data is kept]
+  - In transit: TLS 1.2+ required for all communications
+  - At rest: Database encryption for sensitive data (passwords, admin information)
+- **PII Protection**: Minimal personal data collection (admin email only), no public user registration
+- **Data Retention**: Admin logs retained 90 days, user analytics anonymized after 12 months
+- **GDPR Compliance**: Cookie consent, data export capability, right to deletion
 
 ### 4.3 Input Security
-[TO BE FILLED BY USER]
-- **Input Validation**: All user inputs must be validated for [TO BE FILLED]
-- **SQL Injection Prevention**: [TO BE FILLED - specific requirements]
-- **XSS Prevention**: [TO BE FILLED - specific requirements]
-- **File Upload Security**: [TO BE FILLED - file type restrictions, scanning]
+- **Input Validation**: Server-side validation for all inputs, length limits, format validation
+- **SQL Injection Prevention**: Parameterized queries only, Entity Framework ORM protection
+- **XSS Prevention**: Output encoding for all user content, Content Security Policy headers
+- **File Upload Security**: Image files only (.jpg, .png, .webp), 5MB size limit, virus scanning
+- **Rich Text Security**: HTML sanitization for tutorial content, whitelist of allowed tags
 
 ### 4.4 Admin Security
-[TO BE FILLED BY USER]
-- **Admin URL Protection**: Admin pages should be [TO BE FILLED - how protected]
-- **Access Logging**: Log all admin actions with [TO BE FILLED - detail level]
-- **IP Restrictions**: [TO BE FILLED - any IP-based access controls]
+- **Admin URL Protection**: /admin path not linked from public navigation, requires authentication
+- **Access Logging**: Log all admin actions with timestamp, user ID, IP address, action details
+- **IP Restrictions**: None initially, but capability to restrict admin access by IP if needed
+- **Audit Trail**: Complete audit log of content changes with before/after values
+- **Session Security**: Automatic logout on browser close, secure session token generation
 
 ---
 
@@ -141,49 +146,50 @@
 ## 6. Compatibility Requirements
 
 ### 6.1 Browser Compatibility
-[TO BE FILLED BY USER] - Complete the compatibility matrix
 
 | Browser | Minimum Version | Support Level | Notes |
 |---------|----------------|---------------|-------|
-| Chrome | [TO BE FILLED] | [Full/Limited] | [TO BE FILLED] |
-| Firefox | [TO BE FILLED] | [Full/Limited] | [TO BE FILLED] |
-| Safari | [TO BE FILLED] | [Full/Limited] | [TO BE FILLED] |
-| Edge | [TO BE FILLED] | [Full/Limited] | [TO BE FILLED] |
+| Chrome | 90+ | Full | Primary development target |
+| Firefox | 88+ | Full | Secondary testing priority |
+| Safari | 14+ | Full | iOS and macOS support |
+| Edge | 90+ | Full | Chromium-based versions only |
+| Mobile Safari | 14+ | Full | iOS mobile experience |
+| Chrome Mobile | 90+ | Full | Android mobile experience |
+| Internet Explorer | None | Not Supported | Legacy browser not supported |
 
 ### 6.2 Device Compatibility
-[TO BE FILLED BY USER]
-- **Desktop**: [TO BE FILLED - OS requirements, screen resolutions]
-- **Tablets**: [TO BE FILLED - iOS/Android versions, screen sizes]
-- **Mobile**: [TO BE FILLED - iOS/Android versions, screen sizes]
+- **Desktop**: Windows 10+, macOS 10.15+, Linux Ubuntu 20.04+, minimum 1024x768 resolution
+- **Tablets**: iPad (iOS 14+), Android tablets (Android 10+), 768px+ width support
+- **Mobile**: iPhone 8+ (iOS 14+), Android phones (Android 10+), 375px+ width support
+- **Screen Sizes**: Responsive design from 320px to 2560px width
 
 ### 6.3 Technology Compatibility
-[TO BE FILLED BY USER]
-- **JavaScript**: Minimum ES[TO BE FILLED] support required
-- **WebAssembly**: [TO BE FILLED - required/optional]
-- **Local Storage**: [TO BE FILLED - requirements for browser storage]
+- **JavaScript**: Minimum ES2020 support required for modern features
+- **WebAssembly**: Optional for Blazor WebAssembly components, not required for basic functionality
+- **Local Storage**: Required for theme preference storage, graceful degradation if unavailable
+- **Cookies**: Required for admin authentication, site functionality depends on cookie support
 
 ---
 
 ## 7. Maintainability Requirements
 
 ### 7.1 Code Quality Standards
-[TO BE FILLED BY USER]
-- **Code Coverage**: Minimum [TO BE FILLED]% test coverage
-- **Documentation**: [TO BE FILLED - documentation requirements]
-- **Code Review**: [TO BE FILLED - review process requirements]
+- **Code Coverage**: Minimum 80% test coverage for business logic, 60% overall
+- **Documentation**: XML documentation for all public APIs, README for each major component
+- **Code Review**: All changes require review, automated code analysis with SonarQube or similar
+- **Coding Standards**: EditorConfig enforced, consistent C# styling, no code smells
 
 ### 7.2 Deployment Requirements
-[TO BE FILLED BY USER]
-- **Deployment Frequency**: Ability to deploy updates [TO BE FILLED - frequency]
-- **Zero-Downtime**: [TO BE FILLED - required/not required for deployments]
-- **Rollback Capability**: [TO BE FILLED - rollback time requirements]
+- **Deployment Frequency**: Ability to deploy updates weekly during development, monthly in production
+- **Zero-Downtime**: Not required initially, brief downtime acceptable during maintenance windows
+- **Rollback Capability**: Ability to rollback to previous version within 30 minutes
+- **Environment Promotion**: Dev → Staging → Production pipeline with automated testing
 
 ### 7.3 Monitoring & Logging
-[TO BE FILLED BY USER]
-- **Application Monitoring**: [TO BE FILLED - what should be monitored]
-- **Performance Metrics**: [TO BE FILLED - what metrics to collect]
-- **Log Retention**: Keep logs for [TO BE FILLED] months/years
-- **Alerting**: [TO BE FILLED - when and how to alert administrators]
+- **Application Monitoring**: Response times, error rates, resource usage, user activity
+- **Performance Metrics**: Page load times, database query performance, search response times
+- **Log Retention**: Error logs 90 days, access logs 30 days, admin activity logs 1 year
+- **Alerting**: Email alerts for critical errors, performance degradation, security events
 
 ---
 
@@ -211,56 +217,52 @@
 ## 9. Environmental Requirements
 
 ### 9.1 Operating Environment
-[TO BE FILLED BY USER]
-- **Hosting Platform**: [TO BE FILLED - cloud provider, on-premise, hybrid]
-- **Operating System**: [TO BE FILLED - Windows, Linux preferences]
-- **Database System**: [TO BE FILLED - SQL Server, PostgreSQL, etc.]
+- **Hosting Platform**: Azure App Service (preferred) or AWS Elastic Beanstalk, shared hosting acceptable initially
+- **Operating System**: Windows Server 2019+ for production, Windows 10/11 for development
+- **Database System**: SQL Server 2019+ for production, SQLite for development and testing
+- **Web Server**: IIS with ASP.NET Core hosting bundle
 
 ### 9.2 Development Environment
-[TO BE FILLED BY USER]
-- **Development Tools**: [TO BE FILLED - Visual Studio, VS Code, etc.]
-- **Version Control**: [TO BE FILLED - Git, specific workflows]
-- **CI/CD Requirements**: [TO BE FILLED - automated testing, deployment]
+- **Development Tools**: Visual Studio 2022 Community (primary), VS Code (secondary)
+- **Version Control**: Git with GitHub, feature branch workflow, pull request reviews
+- **CI/CD Requirements**: GitHub Actions for automated build/test, manual deployment initially
+- **Package Management**: NuGet for .NET packages, npm for any client-side dependencies
 
 ---
 
 ## 10. Quality Assurance Requirements
 
 ### 10.1 Testing Requirements
-[TO BE FILLED BY USER]
-- **Unit Testing**: [TO BE FILLED - coverage requirements, frameworks]
-- **Integration Testing**: [TO BE FILLED - scope and requirements]
-- **Performance Testing**: [TO BE FILLED - load testing requirements]
-- **Security Testing**: [TO BE FILLED - security validation requirements]
-- **User Acceptance Testing**: [TO BE FILLED - UAT process and criteria]
+- **Unit Testing**: xUnit framework, 80%+ coverage for business logic, FluentAssertions for readable tests
+- **Integration Testing**: ASP.NET Core TestHost for API testing, in-memory database for data layer tests
+- **Performance Testing**: Simple load testing with 50+ concurrent users, response time validation
+- **Security Testing**: OWASP ZAP scanning, dependency vulnerability scanning, penetration testing annually
+- **User Acceptance Testing**: Manual testing with actual admin user, usability testing for vintage theme
+- **Browser Testing**: Cross-browser testing on major browsers, mobile device testing
 
 ### 10.2 Quality Metrics
-[TO BE FILLED BY USER]
-- **Defect Rate**: No more than [TO BE FILLED] critical bugs per release
-- **Performance Benchmarks**: [TO BE FILLED - specific performance targets]
-- **User Satisfaction**: Target [TO BE FILLED]% user satisfaction score
+- **Defect Rate**: No more than 2 critical bugs per release, 5 minor bugs acceptable
+- **Performance Benchmarks**: All response time targets met, no performance regression between releases
+- **User Satisfaction**: Target 4.5/5 user satisfaction score, measured through feedback forms
+- **Accessibility Score**: Lighthouse accessibility score >90, WAVE tool validation passed
 
 ---
 
-## ?? COMPLETION STATUS
+## ✅ COMPLETION STATUS
 
-**TEMPLATE STATUS**: ? INCOMPLETE - User Input Required  
-**CRITICAL AREAS NEEDING COMPLETION**:
-- [ ] Performance targets and acceptable limits
-- [ ] Security requirements and compliance needs  
-- [ ] Availability and reliability expectations
-- [ ] Browser and device compatibility matrix
-- [ ] Quality assurance and testing requirements
+**DOCUMENT STATUS**: ✅ COMPLETE - Ready for Phase 2  
+**CRITICAL AREAS COMPLETED**:
+- [x] Performance targets and acceptable limits defined
+- [x] Security requirements and compliance needs specified
+- [x] Availability and reliability expectations set
+- [x] Browser and device compatibility matrix completed
+- [x] Quality assurance and testing requirements detailed
+- [x] Environmental and operational requirements specified
+- [x] Maintainability and monitoring requirements defined
 
-**IMPACT OF INCOMPLETE REQUIREMENTS**:
-- Cannot accurately estimate development effort
-- Risk of performance issues in production
-- Security vulnerabilities if requirements unclear
-- Compatibility problems with user devices
-- Deployment and maintenance challenges
-
-**NEXT ACTION**: Complete all [TO BE FILLED] sections before proceeding  
-**WORKFLOW GATE**: Technical architecture cannot begin until requirements are finalized  
+**PHASE GATE STATUS**: ✅ APPROVED - All Non-Functional Requirements Complete  
+**NEXT PHASE**: Technical architecture implementation can begin  
+**DEVELOPMENT READY**: All requirements baseline established for implementation  
 
 ---
 

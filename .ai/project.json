@@ -1,48 +1,52 @@
 {
-  "name": "Eidos Ontology Builder",
-  "version": "1.0.0",
-  "description": "Modern web-based ontology builder with real-time collaboration",
-  "type": "blazor-server",
+  "name": "PROJECT_NAME_HERE",
+  "version": "0.1.0",
+  "description": "Short description of the application's purpose goes here.",
+  "type": "Blazor Server-Side Rendering (SSR) combined with WebAssembly (WASM)",
   "framework": {
     "name": ".NET",
-    "version": "9.0"
+    "version": "10.0"
   },
   "languages": ["C#", "Razor", "JavaScript", "CSS"],
   "mainFiles": [
     "Program.cs",
     "DEVELOPMENT_LEDGER.md",
-    "claude.md"
+    "ARCHITECTURE.md"
   ],
   "importantDirectories": [
-    "Components/Pages",
-    "Services",
-    "Data/Repositories",
-    "Hubs",
-    "Models"
+    "Features",
+    "Domain",
+    "Infrastructure",
+    "Shared",
+    "Components",
+    "Pages",
+    "tests"
   ],
   "conventions": {
     "namingConventions": {
-      "services": "PascalCase with 'Service' suffix (e.g., OntologyService)",
-      "repositories": "PascalCase with 'Repository' suffix (e.g., OntologyRepository)",
-      "components": "PascalCase (e.g., OntologySettingsDialog)",
-      "endpoints": "PascalCase with 'Endpoint' suffix (e.g., DevSwitchUserEndpoint)"
+      "services": "PascalCase with 'Service' suffix (e.g., ExampleService)",
+      "repositories": "PascalCase with 'Repository' suffix (e.g., ExampleRepository)",
+      "components": "PascalCase (e.g., ExampleComponent)",
+      "endpoints": "PascalCase with 'Endpoint' suffix (e.g., GetExampleEndpoint)",
+      "handlers": "PascalCase with 'Handler' suffix (e.g., GetExampleHandler)",
+      "commandsQueries": "PascalCase with 'Command' or 'Query' suffix (e.g., CreateExampleCommand)"
     },
     "patterns": {
-      "dataAccess": "Repository Pattern with IRepository<T> interface",
-      "undo": "Command Pattern for concept/relationship operations",
-      "permissions": "Always use OntologyPermissionService for access checks",
+      "architecture": "Vertical Slice Architecture (feature-based folders)",
+      "dataAccess": "EF Core via DbContext and repository/extension methods where appropriate",
+      "validation": "FluentValidation for commands and queries",
       "logging": "Structured logging with placeholders for parameters"
     },
     "testing": {
-      "framework": "xUnit with bUnit for Blazor components",
-      "location": "Eidos.Tests/",
-      "coverage": "157+ tests, 100% passing"
+      "framework": "xUnit for unit tests, bUnit for Blazor UI tests",
+      "location": "PROJECT_NAME_HERE.Tests/",
+      "coverage": "Target: meaningful coverage on core features (handlers, validators, critical components)"
     }
   },
   "quickStart": {
     "setup": [
       "dotnet restore",
-      "dotnet ef database update",
+      "dotnet ef database update   // if using EF Core migrations",
       "dotnet run"
     ],
     "test": "dotnet test",
@@ -50,30 +54,16 @@
   },
   "recentFeatures": [
     {
-      "date": "2025-10-31",
-      "name": "Collaboration Board & Automated Group Management",
-      "description": "Full collaboration discovery system with automatic permission management"
-    },
-    {
-      "date": "2025-10-29",
-      "name": "Individual Visualization",
-      "description": "Show concept instances in graph view with diamond nodes"
-    },
-    {
-      "date": "2025-10-28",
-      "name": "Real-Time Presence Tracking",
-      "description": "Google Docs-style collaboration awareness with user avatars"
+      "date": "YYYY-MM-DD",
+      "name": "FEATURE_NAME_PLACEHOLDER",
+      "description": "Brief description of a recently added feature."
     }
   ],
   "keyServices": [
-    "OntologyService - CRUD operations for ontologies",
-    "ConceptService - Concept management with undo/redo",
-    "CollaborationBoardService - Collaboration post management",
-    "OntologyPermissionService - Comprehensive permission checking",
-    "UserGroupService - Group and membership management",
-    "IPresenceService - Real-time user presence tracking"
+    "ExampleService - High-level domain/application operations description placeholder",
+    "AnotherService - Another important service description placeholder"
   ],
-  "databaseProvider": "SQLite (dev) / Azure SQL (prod)",
-  "authentication": "ASP.NET Core Identity with OAuth (Google, Microsoft, GitHub, Entra ID)",
-  "realtime": "SignalR for presence tracking and concurrent editing"
+  "databaseProvider": "SQL Server",
+  "authentication": "Authentication strategy placeholder (e.g., None for MVP, Identity, OAuth, etc.)",
+  "realtime": "Optional: SignalR or other realtime technology (or 'None' if not used)"
 }
