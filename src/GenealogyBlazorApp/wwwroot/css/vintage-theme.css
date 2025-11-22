@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
+:root {
+    --font-family-serif: 'Playfair Display', serif;
+    --font-family-sans-serif: 'Open Sans', sans-serif;
+    
+    --color-parchment: #fdf6e3;
+    --color-dark-brown: #3e2723;
+    --color-sepia: #8d6e63;
+    --color-amber: #ffc107;
+    --color-parchment-darker: #f5eeda;
+    --color-link: #5d4037;
+    --color-link-hover: #8d6e63;
+}
+
+body {
+    background-color: var(--color-parchment);
+    color: var(--color-dark-brown);
+    font-family: var(--font-family-sans-serif);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-serif);
+    color: var(--color-dark-brown);
+}
+
+a {
+    color: var(--color-link);
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+    color: var(--color-link-hover);
+}
+
+.card-vintage {
+    background-color: var(--color-parchment-darker);
+    border: 1px solid #d7c8a0;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    transition: box-shadow 0.3s ease;
+}
+
+.card-vintage:hover {
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-vintage .card-header {
+    background-color: transparent;
+    border-bottom: 1px solid #d7c8a0;
+    font-family: var(--font-family-serif);
+    font-weight: 700;
+}
+
+.card-vintage .list-group-item {
+    background-color: transparent;
+    border-color: #d7c8a0;
+}

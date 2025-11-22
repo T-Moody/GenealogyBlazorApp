@@ -156,14 +156,7 @@ if (ontology.UserId != userId)
 
 ### Database Operations
 
-#### Use Repository Pattern
-```csharp
-// ✅ Good - Use repository
-var ontology = await _ontologyRepository.GetByIdAsync(id);
-
-// ❌ Bad - Direct DbContext access in service
-var ontology = await _context.Ontologies.FindAsync(id);
-```
+#### Use Vertical slice
 
 #### Optimize Queries
 

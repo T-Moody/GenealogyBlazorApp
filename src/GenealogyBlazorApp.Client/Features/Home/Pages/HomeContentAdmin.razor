@@ -1,0 +1,35 @@
+@page "/admin/home"
+@rendermode InteractiveAuto
+@using GenealogyBlazorApp.Shared.DTOs
+@using GenealogyBlazorApp.Shared.Services
+
+<h3>Home Page Content</h3>
+
+@if (homeContent == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model="@homeContent" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="mb-3">
+            <label for="siteTitle" class="form-label">Site Title</label>
+            <InputText id="siteTitle" class="form-control" @bind-Value="homeContent.SiteTitle" />
+        </div>
+
+        <div class="mb-3">
+            <label for="tagline" class="form-label">Tagline</label>
+            <InputText id="tagline" class="form-control" @bind-Value="homeContent.Tagline" />
+        </div>
+
+        <div class="mb-3">
+            <label for="aboutContent" class="form-label">About Content</label>
+            <InputTextArea id="aboutContent" class="form-control" @bind-Value="homeContent.AboutContent" rows="5" />
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
+}

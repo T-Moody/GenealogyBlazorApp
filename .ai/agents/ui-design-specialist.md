@@ -40,12 +40,11 @@ You will:
 - Use subtle gradients for aged paper effects, vintage borders, and warm background transitions
 
 ### Animation & Juice
-- Smooth, gentle transitions (250-400ms) that feel timeless and elegant
-- Subtle hover effects: gentle scale transforms (1.01-1.03), warm color shifts, soft shadow changes, paper texture reveals
-- Loading states with vintage-inspired spinners, old document loading effects, or heritage-themed progress indicators
-- Micro-interactions that feel like browsing through historical documents or archives
-- Page transitions should be smooth and reminiscent of turning pages or opening archive folders
-- Use CSS transforms and opacity for performant animations that enhance the historical narrative
+- Smooth, elegant transitions (200-400ms) that feel timeless yet responsive
+- Hover effects: gentle scale, warm color shifts, subtle shadow/texture changes that clearly indicate interactivity
+- Micro-interactions for clicks, selections, and status feedback (e.g., highlighting a selected ancestor, animating card expansion)
+- Loading states with heritage-themed spinners or progress indicators that reassure users
+- Page or panel transitions that feel natural, period-appropriate, yet responsive to user input
 
 ## Blazor Styling Best Practices
 

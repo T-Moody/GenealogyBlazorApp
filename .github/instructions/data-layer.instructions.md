@@ -1,29 +1,37 @@
 # Data Layer Development Instructions
 
-## Entity Framework Core Patterns
+## Vertical Slice Architecture - Data Access Patterns
 
-### Repository Pattern Implementation
+### Direct DbContext Usage in Handlers
 
-All data access should follow the established repository pattern in `/Data/Repositories/`:
+This project uses **Vertical Slice Architecture**. Data access is handled directly in MediatR handlers, NOT through repository patterns:
 
 ```csharp
-public class ConceptRepository : IConceptRepository
+public class GetHomeContentQueryHandler : IRequestHandler<GetHomeContentQuery, HomeContentDto?>
 {
-    private readonly OntologyDbContext context;
-    private readonly ILogger<ConceptRepository> logger;
+    private readonly AppDbContext _context;
+    private readonly ILogger<GetHomeContentQueryHandler> _logger;
 
-    public ConceptRepository(OntologyDbContext context, ILogger<ConceptRepository> logger)
+    public GetHomeContentQueryHandler(AppDbContext context, ILogger<GetHomeContentQueryHandler> logger)
     {
-        this.context = context;
-        this.logger = logger;
+        _context = context;
+        _logger = logger;
     }
 
-    public async Task<IEnumerable<Concept>> GetAllAsync()
+    public async Task<HomeContentDto?> Handle(GetHomeContentQuery request, CancellationToken cancellationToken)
     {
-        return await context.Concepts
+        return await _context.HomeContent
             .AsNoTracking() // Use for read-only operations
-            .OrderBy(c => c.Name)
-            .ToListAsync();
+            .Where(h => h.IsActive)
+            .Select(h => new HomeContentDto
+            {
+                Id = h.Id,
+                SiteTitle = h.SiteTitle,
+                Tagline = h.Tagline,
+                AboutContent = h.AboutContent,
+                // ... other mappings
+            })
+            .FirstOrDefaultAsync(cancellationToken);
     }
 }
 ```
