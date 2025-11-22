@@ -1,58 +1,189 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Open+Sans:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&display=swap');
 
 :root {
-    --font-family-serif: 'Playfair Display', serif;
-    --font-family-sans-serif: 'Open Sans', sans-serif;
-    
+    /* Color Palette */
     --color-parchment: #fdf6e3;
-    --color-dark-brown: #3e2723;
-    --color-sepia: #8d6e63;
-    --color-amber: #ffc107;
     --color-parchment-darker: #f5eeda;
-    --color-link: #5d4037;
-    --color-link-hover: #8d6e63;
+    --color-parchment-border: #d7c8a0;
+    
+    --color-ink: #3e2723;
+    --color-ink-light: #5d4037;
+    
+    --color-sepia: #8d6e63;
+    --color-sepia-light: #efebe9;
+    
+    --color-gold: #c5a059;
+    --color-gold-dim: #b08d55;
+    
+    --color-leather: #4e342e;
+    --color-leather-dark: #2d2417;
+
+    /* Typography */
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Open Sans', sans-serif;
+    --font-script: 'Pinyon Script', cursive;
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2.5rem;
+
+    /* Shadows & Effects */
+    --shadow-paper: 0 2px 4px rgba(62, 39, 35, 0.1);
+    --shadow-paper-hover: 0 4px 8px rgba(62, 39, 35, 0.15);
+    --shadow-deep: 0 8px 16px rgba(45, 36, 23, 0.2);
+    
+    --border-vintage: 1px solid var(--color-parchment-border);
+    --border-double: 3px double var(--color-parchment-border);
 }
 
 body {
     background-color: var(--color-parchment);
-    color: var(--color-dark-brown);
-    font-family: var(--font-family-sans-serif);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
 }
 
+/* Typography Overrides */
 h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-family-serif);
-    color: var(--color-dark-brown);
-}
-
-a {
-    color: var(--color-link);
-    transition: color 0.2s ease-in-out;
-}
-
-a:hover {
-    color: var(--color-link-hover);
-}
-
-.card-vintage {
-    background-color: var(--color-parchment-darker);
-    border: 1px solid #d7c8a0;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
-    transition: box-shadow 0.3s ease;
-}
-
-.card-vintage:hover {
-    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.card-vintage .card-header {
-    background-color: transparent;
-    border-bottom: 1px solid #d7c8a0;
-    font-family: var(--font-family-serif);
+    font-family: var(--font-serif);
+    color: var(--color-ink);
+    margin-bottom: var(--spacing-md);
     font-weight: 700;
 }
 
-.card-vintage .list-group-item {
-    background-color: transparent;
-    border-color: #d7c8a0;
+h1 { font-size: 2.5rem; border-bottom: 2px solid var(--color-parchment-border); padding-bottom: var(--spacing-sm); }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; color: var(--color-ink-light); }
+
+a {
+    color: var(--color-ink-light);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--color-sepia);
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    color: var(--color-sepia);
+    border-bottom: 1px solid var(--color-sepia);
+}
+
+/* Vintage Card Component */
+.card-vintage {
+    background-color: #fffbf0;
+    border: 1px solid var(--color-parchment-border);
+    border-radius: 2px;
+    box-shadow: var(--shadow-paper);
+    padding: var(--spacing-lg);
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-vintage::before {
+    content: '';
+    position: absolute;
+    top: 4px; left: 4px; right: 4px; bottom: 4px;
+    border: 1px solid rgba(215, 200, 160, 0.3);
+    pointer-events: none;
+}
+
+.card-vintage:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-paper-hover);
+}
+
+.card-vintage-header {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    color: var(--color-ink);
+    border-bottom: 1px solid var(--color-parchment-border);
+    padding-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Buttons */
+.btn-vintage {
+    background-color: var(--color-parchment-darker);
+    color: var(--color-ink);
+    border: 1px solid var(--color-parchment-border);
+    font-family: var(--font-serif);
+    padding: 0.5rem 1.5rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.9rem;
+}
+
+.btn-vintage:hover {
+    background-color: var(--color-parchment-border);
+    color: var(--color-leather-dark);
+    box-shadow: var(--shadow-paper);
+}
+
+.btn-vintage-primary {
+    background-color: var(--color-ink);
+    color: var(--color-parchment);
+    border-color: var(--color-ink);
+}
+
+.btn-vintage-primary:hover {
+    background-color: var(--color-leather-dark);
+    color: var(--color-gold);
+}
+
+/* Form Elements */
+.form-control-vintage {
+    background-color: #fff;
+    border: 1px solid var(--color-parchment-border);
+    padding: 0.5rem;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    border-radius: 2px;
+}
+
+.form-control-vintage:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 2px rgba(197, 160, 89, 0.2);
+}
+
+/* Utilities */
+.text-script {
+    font-family: var(--font-script);
+    font-size: 1.5em;
+    color: var(--color-sepia);
+}
+
+.text-gold { color: var(--color-gold); }
+.bg-parchment { background-color: var(--color-parchment); }
+
+.vintage-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-parchment-border), transparent);
+    margin: var(--spacing-lg) 0;
+    border: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: var(--color-parchment);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--color-parchment-border);
+    border: 2px solid var(--color-parchment);
+    border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-sepia);
 }

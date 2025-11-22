@@ -1,24 +1,18 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">GenealogyBlazorApp</a>
+﻿<div class="vintage-nav">
+    <div class="nav-header">
+        <div class="brand-icon">G</div>
+        <span class="brand-name">Genealogy</span>
     </div>
-</div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/admin/home">
-                <span class="bi bi-pencil-square-nav-menu" aria-hidden="true"></span> Home Admin
-            </NavLink>
-        </div>
+    <nav class="nav-links">
+        <NavLink class="nav-item" href="" Match="NavLinkMatch.All">
+            <span class="icon">☙</span> Home
+        </NavLink>
+        <NavLink class="nav-item" href="admin/home">
+            <span class="icon">✎</span> Home Admin
+        </NavLink>
     </nav>
+    
+    <div class="nav-decoration"></div>
 </div>
 
