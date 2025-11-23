@@ -33,9 +33,11 @@ public class GetHomeContentQueryHandler : IRequestHandler<GetHomeContentQuery, H
                 SiteTitle = home.SiteTitle,
                 Tagline = home.Tagline,
                 AboutContent = home.AboutContent,
+                AboutSectionTitle = home.AboutSectionTitle,
                 SidebarLinks = home.SidebarLinks,
                 HeroImagePath = home.HeroImagePath,
                 ProfileImagePath = home.ProfileImagePath,
+                ProfileImageCaption = home.ProfileImageCaption,
                 
                 HuronTitle = home.HuronTitle,
                 HuronImagePath = home.HuronImagePath,

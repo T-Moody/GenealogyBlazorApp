@@ -14,11 +14,13 @@ public class HomeState
     public string SiteTitle { get; set; } = string.Empty;
     public string Tagline { get; set; } = string.Empty;
     public string AboutContent { get; set; } = string.Empty;
+    public string AboutSectionTitle { get; set; } = "About Our History";
     public string SidebarLinks { get; set; } = string.Empty; // Kept for raw access if needed, but primary is Links
     public List<LinkModel> Links { get; set; } = new();
     
     public string? HeroImagePath { get; set; }
     public string? ProfileImagePath { get; set; }
+    public string ProfileImageCaption { get; set; } = "The Archivist";
     
     // County Cards
     public string HuronTitle { get; set; } = "Huron County";
@@ -35,11 +37,13 @@ public class HomeState
         SiteTitle = dto.SiteTitle;
         Tagline = dto.Tagline;
         AboutContent = dto.AboutContent;
+        AboutSectionTitle = dto.AboutSectionTitle;
         SidebarLinks = dto.SidebarLinks;
         ParseLinks(dto.SidebarLinks);
         
         HeroImagePath = dto.HeroImagePath;
         ProfileImagePath = dto.ProfileImagePath;
+        ProfileImageCaption = dto.ProfileImageCaption;
         
         HuronTitle = dto.HuronTitle;
         HuronImagePath = dto.HuronImagePath;
@@ -54,11 +58,13 @@ public class HomeState
         SiteTitle = dto.SiteTitle;
         Tagline = dto.Tagline;
         AboutContent = dto.AboutContent;
+        AboutSectionTitle = dto.AboutSectionTitle;
         SidebarLinks = dto.SidebarLinks;
         ParseLinks(dto.SidebarLinks);
         
         HeroImagePath = dto.HeroImagePath;
         ProfileImagePath = dto.ProfileImagePath;
+        ProfileImageCaption = dto.ProfileImageCaption;
         
         HuronTitle = dto.HuronTitle;
         HuronImagePath = dto.HuronImagePath;

@@ -28,8 +28,10 @@ public class UpdateHomeContentHandler : IRequestHandler<UpdateHomeContentCommand
         home.SiteTitle = request.Dto.SiteTitle;
         home.Tagline = request.Dto.Tagline;
         home.AboutContent = request.Dto.AboutContent;
+        home.AboutSectionTitle = request.Dto.AboutSectionTitle;
         home.HeroImagePath = request.Dto.HeroImagePath;
         home.ProfileImagePath = request.Dto.ProfileImagePath;
+        home.ProfileImageCaption = request.Dto.ProfileImageCaption;
         home.SidebarLinks = request.Dto.SidebarLinks;
 
         // County Cards

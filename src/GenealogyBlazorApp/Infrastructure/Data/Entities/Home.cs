@@ -13,7 +13,11 @@ public class Home : BaseEntity
     
     public string AboutContent { get; set; } = string.Empty;
     
+    public string AboutSectionTitle { get; set; } = "About Our History";
+
     public string? ProfileImagePath { get; set; }
+    
+    public string ProfileImageCaption { get; set; } = "The Archivist";
     
     public string SidebarLinks { get; set; } = string.Empty; // JSON serialized links
     

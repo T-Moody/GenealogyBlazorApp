@@ -41,8 +41,10 @@ public partial class Editor
                 SiteTitle = State.SiteTitle,
                 Tagline = State.Tagline,
                 AboutContent = State.AboutContent,
+                AboutSectionTitle = State.AboutSectionTitle,
                 HeroImagePath = State.HeroImagePath,
                 ProfileImagePath = State.ProfileImagePath,
+                ProfileImageCaption = State.ProfileImageCaption,
                 SidebarLinks = JsonSerializer.Serialize(State.Links),
                 
                 // County Cards

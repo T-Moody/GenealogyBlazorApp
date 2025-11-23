@@ -13,7 +13,16 @@
             </div>
         }
         
-        <div class="profile-image-caption">The Archivist</div>
+        <div class="profile-image-caption">
+            @if (IsEditor)
+            {
+                <input type="text" class="form-control form-control-sm text-center mt-1" @bind="State.ProfileImageCaption" placeholder="Caption" />
+            }
+            else
+            {
+                @State.ProfileImageCaption
+            }
+        </div>
     </div>
     
     @if (IsEditor)

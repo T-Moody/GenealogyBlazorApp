@@ -2,7 +2,14 @@
 
 <div class="card-vintage mb-4">
     <div class="card-vintage-header">
-        <span>About Our History</span>
+        @if (IsEditor)
+        {
+            <input type="text" class="form-control form-control-sm vintage-input-header" @bind="State.AboutSectionTitle" placeholder="Section Title" />
+        }
+        else
+        {
+            <span>@State.AboutSectionTitle</span>
+        }
         <span class="text-gold">❧</span>
     </div>
     <div class="card-vintage-body">
