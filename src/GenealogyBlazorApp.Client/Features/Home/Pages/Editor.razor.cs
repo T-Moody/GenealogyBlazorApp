@@ -8,16 +8,13 @@ namespace GenealogyBlazorApp.Client.Features.Home.Pages;
 public partial class Editor
 {
     [Inject]
-    private IPublicHomeService PublicHomeService { get; set; } = default!;
-
-    [Inject]
     private IAdminHomeService AdminHomeService { get; set; } = default!;
 
     protected HomeState State { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
-        var content = await PublicHomeService.GetPublicHomeContentAsync();
+        var content = await AdminHomeService.GetHomeContentAsync();
         if (content is not null)
         {
             State.FromDto(content);

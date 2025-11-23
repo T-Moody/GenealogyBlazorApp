@@ -13,6 +13,11 @@ public class AdminHomeService : IAdminHomeService
         _httpClient = httpClient;
     }
 
+    public async Task<HomeContentDto?> GetHomeContentAsync()
+    {
+        return await _httpClient.GetFromJsonAsync<HomeContentDto>("api/home-content/admin");
+    }
+
     public async Task UpdateHomeContentAsync(UpdateHomeContentRequest request)
     {
         var response = await _httpClient.PutAsJsonAsync("api/home-content/admin", request);

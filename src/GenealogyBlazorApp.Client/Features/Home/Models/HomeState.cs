@@ -21,4 +21,14 @@ public class HomeState
         HeroImagePath = dto.HeroImagePath;
         ProfileImagePath = dto.ProfileImagePath;
     }
+
+    public void FromDto(HomeContentDto dto)
+    {
+        SiteTitle = dto.SiteTitle;
+        Tagline = dto.Tagline;
+        AboutContent = dto.AboutContent;
+        SidebarLinks = dto.SidebarLinks;
+        HeroImagePath = dto.HeroImagePath;
+        ProfileImagePath = dto.ProfileImagePath;
+    }
 }

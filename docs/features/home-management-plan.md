@@ -85,14 +85,14 @@ Provide admin users with the ability to manage homepage content including site t
 - [ ] Add audit logging for content changes
 
 #### Feature Slice Implementation
-- [ ] Create GetHomeContentQuery and Handler (direct DbContext access)
-- [ ] Create UpdateHomeContentCommand and Handler (direct DbContext access)
-- [ ] Create GetPublicHomeContentQuery and Handler
+- [x] Create GetHomeContentQuery and Handler (direct DbContext access)
+- [x] Create UpdateHomeContentCommand and Handler (direct DbContext access)
+- [x] Create GetPublicHomeContentQuery and Handler
 - [ ] Add FluentValidation rules for HomeContent commands
-- [ ] Create HomeContent feature endpoints:
+- [x] Create HomeContent feature endpoints:
   - `GET /api/home-content/public` - Get published content (Implemented in `HomeEndpoints.cs`)
-  - `GET /api/home-content/admin` - Get content for admin (Implemented in `HomeEndpoints.cs`)
-  - `PUT /api/home-content/admin` - Update content (To be implemented in `AdminHomeEndpoints.cs`)
+  - `GET /api/home-content/admin` - Get content for admin (Implemented in `AdminHomeEndpoints.cs`)
+  - `PUT /api/home-content/admin` - Update content (Implemented in `AdminHomeEndpoints.cs`)
 
 #### Security & Validation
 - [ ] Add [Authorize] attributes for admin endpoints
@@ -106,7 +106,7 @@ Provide admin users with the ability to manage homepage content including site t
 - [x] Create `Editor.razor` page (`/admin/home/editor`)
   - Uses shared components with `IsEditor="true"`
   - Calls `AdminHomeService` to save changes
-- [ ] Implement `AdminHomeService` client-side service
+- [x] Implement `AdminHomeService` client-side service
 - [ ] Add admin navigation menu item
 
 #### Shared Components (Public & Admin)
