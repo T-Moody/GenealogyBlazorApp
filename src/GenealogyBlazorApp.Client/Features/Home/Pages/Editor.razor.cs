@@ -42,6 +42,7 @@ public partial class Editor
                 AboutContent = State.AboutContent,
                 HeroImagePath = State.HeroImagePath,
                 ProfileImagePath = State.ProfileImagePath,
+                SidebarLinks = State.SidebarLinks,
                 
                 // County Cards
                 HuronTitle = State.HuronTitle,
