@@ -31,11 +31,7 @@ namespace GenealogyBlazorApp.Infrastructure.Data
                         SiteTitle = "Thumb of Michigan Genealogy",
                         Tagline = "Discovering Your Roots in Michigan's Thumb",
                         AboutContent = "Welcome to your genealogy journey! This site is dedicated to helping you explore the rich history of families in the Thumb of Michigan. Our resources and tutorials are designed to guide you, whether you're a beginner or an experienced researcher.",
-                        SidebarLinks = @"<ul class=""county-list"">
-                            <li><a href=""#"">Huron County Records</a></li>
-                            <li><a href=""#"">Tuscola County Archives</a></li>
-                            <li><a href=""#"">Sanilac County History</a></li>
-                        </ul>", // Empty JSON array for links
+                        SidebarLinks = @"[{""Title"":""Ancestry"",""Url"":""https://www.ancestry.com/""},{""Title"":""Familysearch"",""Url"":""https://www.familysearch.org/en/united-states/""},{""Title"":""Findagrave"",""Url"":""https://www.findagrave.com/""},{""Title"":""Usgenweb"",""Url"":""https://www.usgenweb.org/""},{""Title"":""Rootweb"",""Url"":""https://home.rootsweb.com/""}]",
                         HeroImagePath = "/images/hero-image-thumb.png",
                         ProfileImagePath = "/images/profile-image.jpg",
                         
@@ -64,6 +60,13 @@ namespace GenealogyBlazorApp.Infrastructure.Data
                     if (string.IsNullOrEmpty(homeContent.TuscolaTitle))
                     {
                         homeContent.TuscolaTitle = "Tuscola County";
+                        changed = true;
+                    }
+
+                    // Update SidebarLinks if it contains old HTML or is empty
+                    if (string.IsNullOrEmpty(homeContent.SidebarLinks) || homeContent.SidebarLinks.Trim().StartsWith("<"))
+                    {
+                        homeContent.SidebarLinks = @"[{""Title"":""Ancestry"",""Url"":""https://www.ancestry.com/""},{""Title"":""Familysearch"",""Url"":""https://www.familysearch.org/en/united-states/""},{""Title"":""Findagrave"",""Url"":""https://www.findagrave.com/""},{""Title"":""Usgenweb"",""Url"":""https://www.usgenweb.org/""},{""Title"":""Rootweb"",""Url"":""https://home.rootsweb.com/""}]";
                         changed = true;
                     }
 

@@ -2,6 +2,7 @@ using GenealogyBlazorApp.Client.Features.Home.Models;
 using GenealogyBlazorApp.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using GenealogyBlazorApp.Shared.DTOs;
+using System.Text.Json;
 
 namespace GenealogyBlazorApp.Client.Features.Home.Pages;
 
@@ -42,7 +43,7 @@ public partial class Editor
                 AboutContent = State.AboutContent,
                 HeroImagePath = State.HeroImagePath,
                 ProfileImagePath = State.ProfileImagePath,
-                SidebarLinks = State.SidebarLinks,
+                SidebarLinks = JsonSerializer.Serialize(State.Links),
                 
                 // County Cards
                 HuronTitle = State.HuronTitle,
