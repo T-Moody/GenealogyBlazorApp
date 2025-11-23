@@ -86,40 +86,59 @@ A modern, user-friendly web application that empowers everyday people to learn g
 ## 4. Scope Definition
 
 ### 4.1 In Scope
-**Core Features (MVP):**
-- [x] Public homepage with hero section and about content
-- [x] Tutorial management (create, edit, delete, categorize)
-- [x] Resource management (external links, descriptions, county assignment)
-- [x] Category management for organizing content
-- [x] County-specific pages (Huron, Tuscola, Sanilac)
-- [x] Admin authentication and content management interface
-- [x] YouTube video embedding in tutorials
-- [x] Mobile-responsive design using Bootstrap 5
-- [x] Search and filtering functionality
-- [x] SEO-friendly URL structure
+**Core Features (MVP) - Thumb Genealogy Site:**
+
+**1. Global / Site-Wide Features**
+- [ ] Persistent Navigation: Home link always visible, Counties menu (Huron, Sanilac, Tuscola)
+- [ ] Responsive Design: Desktop, tablet, mobile
+- [ ] Simple Layout: Clear headings, minimal clutter
+
+**2. Home Page**
+- [ ] Hero Section: Image/banner, Welcome text
+- [ ] County Links: Prominent buttons/cards linking to each county page (Huron, Sanilac, Tuscola)
+- [ ] Genealogy Websites Section: Quick links to Ancestry, FamilySearch, FindAGrave, USGenWeb, Rootsweb
+- [ ] Optional Teaser: Small snippet of family tree / photos
+
+**3. County Pages (Huron, Sanilac, Tuscola)**
+- [ ] Header: County name, County image/map
+- [ ] Short History Section: 1–3 paragraphs
+- [ ] Resource Sections:
+  - Libraries (address, hours, links)
+  - Societies (historical/genealogical)
+  - Courthouse / Land & Deeds Tutorial
+  - Plat Maps & Other Maps
+  - Newspapers (digital/physical archives)
+  - Naturalizations
+  - Cemeteries
+  - Rural Schools
+  - History Books / Major Events
+  - External Links (MIGenWeb)
+
+**4. Content Management / Backend**
+- [ ] County pages structured with a County entity
+- [ ] ResourceCategory entity for each resource type
+- [ ] Admin interface for adding/editing resources without redeploying
+- [ ] Home Page Management: Admin can edit titles of county cards, upload images, manage quick links
 
 ### 4.2 Out of Scope
 **Not Included in MVP:**
 - User registration/accounts for public users
+- Discussion / Q&A Board (Planned for V2)
+- My Family Tree / Personal Content (Planned for V2)
+- Township / town-level pages (Planned for V2)
+- Search functionality across all resources (Planned for V2)
 - Multi-admin user management
 - Content approval workflows
 - Social sharing features
-- Comments or community features
-- Genealogy tree building tools
-- Document storage/hosting
 - Paid premium features
 - Multi-language support
-- Advanced analytics dashboard
 
 ### 4.3 Future Considerations
 **Potential Phase 2+ Features:**
-- User accounts with learning progress tracking
-- Community features (comments, forums)
-- Additional Michigan counties
-- Content collaboration features
-- Advanced search with full-text indexing
-- Email newsletter integration
-- Mobile app version
+- **Discussion / Q&A Board**: Threads, posts, moderation, categories/filters
+- **My Family Tree**: Public tree display, private tree editing
+- **County Pages Enhancements**: Township mini-pages, visual polish, community integration
+- **Search Functionality**: Search across all county resources or posts
 
 ---
 

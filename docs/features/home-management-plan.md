@@ -25,10 +25,16 @@ Provide admin users with the ability to manage homepage content including site t
    - Inline editing experience: Admin sees the page exactly as it renders publicly, but with editable fields
    - Shared components between public and admin views to ensure consistency
    - Image upload and management for hero/profile images
+   - **County Cards Management**: Admin can update Title and Image for the 3 fixed county cards (Huron, Sanilac, Tuscola)
+   - **Genealogy Websites Management**: Admin can manage quick links to external genealogy sites
    - Preview functionality is inherent in the inline editor design
 
 2. **Homepage Display**
    - Public homepage displays current active content
+   - **County Links**: Prominent, large clickable cards/buttons for Huron, Sanilac, and Tuscola immediately visible
+   - **Navigation**: Remove "About" link from top right; "Home" and "Counties" menu persist
+   - **Scroll Icon**: Add text "Read More" to the scroll icon
+   - **Genealogy Websites**: Quick links section (Ancestry, FamilySearch, etc.)
    - Responsive design with vintage/historical theme
    - Graceful fallback for missing content
    - SEO-optimized meta tags from content
@@ -72,6 +78,21 @@ Provide admin users with the ability to manage homepage content including site t
 **Alternatives**: Separate admin form components, "Edit" mode on public page.
 **Consequences**: Reduces code duplication, ensures WYSIWYG experience, but requires components to handle two modes.
 
+### ADR-007: Structured County Card Storage
+**Context**: The home page features 3 specific counties (Huron, Sanilac, Tuscola). The admin needs to edit their titles and images.
+**Decision**: Store these as structured fields (or a related entity) rather than a generic JSON blob, to allow for specific validation and easier file handling for images.
+**Alternatives**: JSON blob in HomeContent, Hardcoded.
+**Consequences**: Requires schema update to HomeContent or new entity.
+
+### ADR-008: JSON Storage for Variable Lists (Genealogy Links)
+**Context**: The "Genealogy Websites" section contains a variable list of external links.
+**Decision**: Store these as a serialized JSON string in a single column (`GenealogyLinks`) on the `HomeContent` entity.
+**Rationale**: 
+- The data is always retrieved and displayed with the Home page.
+- There is no need to query *inside* the list (e.g. filtering by URL).
+- It avoids the complexity of a separate one-to-many table for a simple display list.
+**Consequences**: Application logic must handle serialization/deserialization and validation.
+
 ## Implementation Plan
 
 ### Backend Tasks (backend-architect, csharp-developer)
@@ -89,6 +110,8 @@ Provide admin users with the ability to manage homepage content including site t
 - [x] Create UpdateHomeContentCommand and Handler (direct DbContext access)
 - [x] Create GetPublicHomeContentQuery and Handler
 - [ ] Add FluentValidation rules for HomeContent commands
+- [ ] **Update HomeContent entity/DTOs to support County Cards (Title, Image)**
+- [ ] **Update HomeContent entity/DTOs to support Genealogy Links (replacing SidebarLinks?)**
 - [x] Create HomeContent feature endpoints:
   - `GET /api/home-content/public` - Get published content (Implemented in `HomeEndpoints.cs`)
   - `GET /api/home-content/admin` - Get content for admin (Implemented in `AdminHomeEndpoints.cs`)
@@ -108,18 +131,27 @@ Provide admin users with the ability to manage homepage content including site t
   - Calls `AdminHomeService` to save changes
 - [x] Implement `AdminHomeService` client-side service
 - [ ] Add admin navigation menu item
+- [ ] **Implement County Card editing in Editor (Title inputs, Image uploads)**
 
 #### Shared Components (Public & Admin)
 - [x] Create `HomeHero.razor` component
   - Support `IsEditor` parameter
   - Render inputs in edit mode, text/image in view mode
+  - **Update: Add "Read More" text to scroll icon**
+- [ ] **Create `CountyCards.razor` component**
+  - Display 3 large cards (Huron, Sanilac, Tuscola)
+  - Support `IsEditor` parameter (Edit Title, Upload Image)
+- [ ] **Create `GenealogyLinks.razor` component** (Replaces Sidebar?)
+  - Quick links to external sites
+  - Support `IsEditor` parameter
 - [x] Create `AboutSection.razor` component
   - Support `IsEditor` parameter
   - Integrate Rich Text Editor (Quill) for edit mode
-- [x] Create `Sidebar.razor` component
+- [x] Create `Sidebar.razor` component (May be deprecated or repurposed)
   - Support `IsEditor` parameter
 - [x] Create `Home.razor` page for public view (`/`)
   - Uses shared components with `IsEditor="false"`
+  - **Update: Remove "About" link from top nav (Global Layout change)**
 
 #### Styling & Theme
 - [ ] Apply vintage/historical CSS classes
@@ -193,9 +225,18 @@ public class HomeContentDto
     public string SiteTitle { get; set; }
     public string Tagline { get; set; }
     public string AboutContent { get; set; }
-    public string SidebarLinks { get; set; }
+    public string GenealogyLinks { get; set; } // Replaces SidebarLinks
     public string? HeroImagePath { get; set; }
     public string? ProfileImagePath { get; set; }
+    
+    // County Cards
+    public string HuronTitle { get; set; }
+    public string? HuronImagePath { get; set; }
+    public string SanilacTitle { get; set; }
+    public string? SanilacImagePath { get; set; }
+    public string TuscolaTitle { get; set; }
+    public string? TuscolaImagePath { get; set; }
+
     public DateTime LastUpdated { get; set; }
     public string LastUpdatedBy { get; set; }
 }
@@ -206,7 +247,8 @@ public class HomeContentDto
 - SiteTitle: Required, max 100 characters
 - Tagline: Optional, max 200 characters  
 - AboutContent: Required, max 5000 characters
-- SidebarLinks: Optional, valid JSON format, max 2000 characters
+- GenealogyLinks: Optional, valid JSON format, max 2000 characters
+- County Titles: Required, max 50 characters
 - Images: JPG/PNG only, max 2MB, max 1920x1080 resolution
 
 ### File Storage

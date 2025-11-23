@@ -3,12 +3,28 @@
 ## Current Status
 **Phase**: Phase 3: Core Development
 **Sprint**: 1
-**Last Updated**: November 22, 2025
-**Active Work**: Home Feature Implementation
+**Last Updated**: November 23, 2025
+**Active Work**: Home Feature Implementation & Requirements Refinement
 **Blockers**: None
 **Next Milestone**: Complete Home Feature (Public & Admin)
 
 ## Decision Log
+
+### November 23, 2025 - Home Page County Cards
+- **Context**: The home page needs prominent links to the 3 main counties (Huron, Sanilac, Tuscola).
+- **Decision**: Implement as structured data (Title, Image) editable by Admin, rather than generic JSON or hardcoded links.
+- **Alternatives**: Hardcoded links (less flexible), Generic JSON (harder to edit for non-tech admin).
+- **Consequences**: Requires backend support for storing these specific card details, and Admin UI for editing them.
+- **Status**: Active
+
+### November 23, 2025 - Home Page Layout Updates
+- **Context**: User feedback requested better visibility for county links and removal of "About" link.
+- **Decision**: 
+  - Add large clickable cards for counties on Home Page.
+  - Remove "About" link from top navigation.
+  - Add "Read More" text to scroll icon.
+  - Add "Genealogy Websites" quick links section.
+- **Status**: Active
 
 ### November 21, 2025 - Technology Stack Selection
 - **Context**: Choosing the foundation for the application.
