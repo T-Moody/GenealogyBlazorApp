@@ -1,0 +1,65 @@
+.vintage-card {
+    background-color: #fff;
+    border: 1px solid var(--color-parchment-border);
+    box-shadow: var(--shadow-paper);
+    position: relative;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    color: var(--color-ink);
+}
+
+.vintage-card .form-label {
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+}
+
+.vintage-card .card-title {
+    color: var(--color-ink);
+}
+
+.vintage-card .text-muted {
+    color: var(--color-ink-light) !important;
+}
+
+.vintage-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(62, 39, 35, 0.2);
+}
+
+.vintage-card::before {
+    content: '';
+    position: absolute;
+    top: 4px; left: 4px; right: 4px; bottom: 4px;
+    border: 1px solid var(--color-parchment-border);
+    pointer-events: none;
+}
+
+.vintage-font {
+    font-family: var(--font-serif);
+    color: var(--color-ink);
+}
+
+.btn-vintage {
+    background-color: var(--color-sepia);
+    color: #fff;
+    font-family: var(--font-serif);
+    border: 1px solid var(--color-ink-light);
+    transition: background-color var(--transition-speed);
+}
+
+.btn-vintage:hover {
+    background-color: var(--color-ink-light);
+    color: #fff;
+    border-color: var(--color-ink);
+}
+
+.vintage-input {
+    font-family: var(--font-serif);
+    color: var(--color-ink);
+    border: 1px solid var(--color-parchment-border);
+    background-color: var(--color-parchment-light);
+}
+
+.vintage-input:focus {
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 0.2rem rgba(184, 134, 11, 0.25);
+}

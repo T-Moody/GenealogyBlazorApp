@@ -42,7 +42,14 @@ public partial class Editor
                 AboutContent = State.AboutContent,
                 HeroImagePath = State.HeroImagePath,
                 ProfileImagePath = State.ProfileImagePath,
-                SidebarLinks = State.SidebarLinks
+                
+                // County Cards
+                HuronTitle = State.HuronTitle,
+                HuronImagePath = State.HuronImagePath,
+                SanilacTitle = State.SanilacTitle,
+                SanilacImagePath = State.SanilacImagePath,
+                TuscolaTitle = State.TuscolaTitle,
+                TuscolaImagePath = State.TuscolaImagePath
             };
 
             await AdminHomeService.UpdateHomeContentAsync(request);

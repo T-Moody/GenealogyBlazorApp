@@ -36,6 +36,14 @@ public class GetHomeContentQueryHandler : IRequestHandler<GetHomeContentQuery, H
                 SidebarLinks = home.SidebarLinks,
                 HeroImagePath = home.HeroImagePath,
                 ProfileImagePath = home.ProfileImagePath,
+                
+                HuronTitle = home.HuronTitle,
+                HuronImagePath = home.HuronImagePath,
+                SanilacTitle = home.SanilacTitle,
+                SanilacImagePath = home.SanilacImagePath,
+                TuscolaTitle = home.TuscolaTitle,
+                TuscolaImagePath = home.TuscolaImagePath,
+
                 LastUpdated = home.UpdatedAt,
                 LastUpdatedBy = home.UpdatedBy ?? string.Empty
             };

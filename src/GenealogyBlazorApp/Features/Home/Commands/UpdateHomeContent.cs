@@ -32,6 +32,14 @@ public class UpdateHomeContentHandler : IRequestHandler<UpdateHomeContentCommand
         home.ProfileImagePath = request.Dto.ProfileImagePath;
         home.SidebarLinks = request.Dto.SidebarLinks;
 
+        // County Cards
+        home.HuronTitle = request.Dto.HuronTitle;
+        home.HuronImagePath = request.Dto.HuronImagePath;
+        home.SanilacTitle = request.Dto.SanilacTitle;
+        home.SanilacImagePath = request.Dto.SanilacImagePath;
+        home.TuscolaTitle = request.Dto.TuscolaTitle;
+        home.TuscolaImagePath = request.Dto.TuscolaImagePath;
+
         await _context.SaveChangesAsync(cancellationToken);
         return Unit.Value;
     }

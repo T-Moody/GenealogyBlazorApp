@@ -10,6 +10,15 @@ public class HomeState
     public string SidebarLinks { get; set; } = string.Empty;
     public string? HeroImagePath { get; set; }
     public string? ProfileImagePath { get; set; }
+    
+    // County Cards
+    public string HuronTitle { get; set; } = "Huron County";
+    public string? HuronImagePath { get; set; }
+    public string SanilacTitle { get; set; } = "Sanilac County";
+    public string? SanilacImagePath { get; set; }
+    public string TuscolaTitle { get; set; } = "Tuscola County";
+    public string? TuscolaImagePath { get; set; }
+
     public bool IsLoading { get; set; } = true;
 
     public void FromDto(PublicHomeContentDto dto)
@@ -20,6 +29,13 @@ public class HomeState
         SidebarLinks = dto.SidebarLinks;
         HeroImagePath = dto.HeroImagePath;
         ProfileImagePath = dto.ProfileImagePath;
+        
+        HuronTitle = dto.HuronTitle;
+        HuronImagePath = dto.HuronImagePath;
+        SanilacTitle = dto.SanilacTitle;
+        SanilacImagePath = dto.SanilacImagePath;
+        TuscolaTitle = dto.TuscolaTitle;
+        TuscolaImagePath = dto.TuscolaImagePath;
     }
 
     public void FromDto(HomeContentDto dto)
@@ -30,5 +46,12 @@ public class HomeState
         SidebarLinks = dto.SidebarLinks;
         HeroImagePath = dto.HeroImagePath;
         ProfileImagePath = dto.ProfileImagePath;
+        
+        HuronTitle = dto.HuronTitle;
+        HuronImagePath = dto.HuronImagePath;
+        SanilacTitle = dto.SanilacTitle;
+        SanilacImagePath = dto.SanilacImagePath;
+        TuscolaTitle = dto.TuscolaTitle;
+        TuscolaImagePath = dto.TuscolaImagePath;
     }
 }

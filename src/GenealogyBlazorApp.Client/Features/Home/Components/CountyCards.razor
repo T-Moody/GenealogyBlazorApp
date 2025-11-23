@@ -1,0 +1,32 @@
+@using GenealogyBlazorApp.Client.Features.Home.Models
+@namespace GenealogyBlazorApp.Client.Features.Home.Components
+
+<div class="county-cards-section mt-5 mb-5">
+    <div class="row">
+        @foreach (var county in Counties)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card vintage-card h-100">
+                    <div class="card-body text-center d-flex flex-column justify-content-center">
+                        @if (IsEditor)
+                        {
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">County Title</label>
+                                <input type="text" class="form-control vintage-input" 
+                                       value="@county.GetTitle()" 
+                                       @onchange="@(e => county.SetTitle(e.Value?.ToString() ?? ""))" />
+                            </div>
+                        }
+                        else
+                        {
+                            <h3 class="card-title vintage-font mb-3">@county.GetTitle()</h3>
+                            <div class="mt-auto">
+                                <a href="@county.Link" class="btn btn-vintage">@county.ButtonText</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

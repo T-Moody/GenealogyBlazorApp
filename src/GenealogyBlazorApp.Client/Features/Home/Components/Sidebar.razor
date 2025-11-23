@@ -23,23 +23,3 @@
         </div>
     }
 </div>
-
-<div class="card-vintage">
-    <div class="card-vintage-header">
-        <span>County Resources</span>
-        <span class="text-gold">❖</span>
-    </div>
-    <div class="card-vintage-body">
-        @if (IsEditor)
-        {
-            <textarea class="form-control vintage-textarea" rows="10" @bind="State.SidebarLinks" placeholder="Enter links (HTML)..."></textarea>
-             <div class="form-text text-muted mt-2">
-                <small>Use &lt;ul class="county-list"&gt;...&lt;/ul&gt;</small>
-            </div>
-        }
-        else
-        {
-            @((MarkupString)State.SidebarLinks)
-        }
-    </div>
-</div>

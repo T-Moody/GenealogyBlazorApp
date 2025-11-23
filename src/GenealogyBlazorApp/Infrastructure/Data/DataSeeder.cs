@@ -23,9 +23,10 @@ namespace GenealogyBlazorApp.Infrastructure.Data
                 await dbContext.Database.MigrateAsync();
 
                 // Seed Home Content
-                if (!await dbContext.Home.AnyAsync())
+                var homeContent = await dbContext.Home.FirstOrDefaultAsync();
+                if (homeContent == null)
                 {
-                    var homeContent = new Home
+                    homeContent = new Home
                     {
                         SiteTitle = "Thumb of Michigan Genealogy",
                         Tagline = "Discovering Your Roots in Michigan's Thumb",
@@ -36,10 +37,40 @@ namespace GenealogyBlazorApp.Infrastructure.Data
                             <li><a href=""#"">Sanilac County History</a></li>
                         </ul>", // Empty JSON array for links
                         HeroImagePath = "/images/hero-image-thumb.png",
-                        ProfileImagePath = "/images/profile-image.jpg"
+                        ProfileImagePath = "/images/profile-image.jpg",
+                        
+                        // Seed County Data
+                        HuronTitle = "Huron County",
+                        SanilacTitle = "Sanilac County",
+                        TuscolaTitle = "Tuscola County"
                     };
                     await dbContext.Home.AddAsync(homeContent);
                     await dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    // Ensure county data is seeded if missing
+                    bool changed = false;
+                    if (string.IsNullOrEmpty(homeContent.HuronTitle))
+                    {
+                        homeContent.HuronTitle = "Huron County";
+                        changed = true;
+                    }
+                    if (string.IsNullOrEmpty(homeContent.SanilacTitle))
+                    {
+                        homeContent.SanilacTitle = "Sanilac County";
+                        changed = true;
+                    }
+                    if (string.IsNullOrEmpty(homeContent.TuscolaTitle))
+                    {
+                        homeContent.TuscolaTitle = "Tuscola County";
+                        changed = true;
+                    }
+
+                    if (changed)
+                    {
+                        await dbContext.SaveChangesAsync();
+                    }
                 }
 
                 // Seed Admin User (if not exists)

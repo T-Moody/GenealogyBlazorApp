@@ -31,7 +31,13 @@ public class GetPublicHomeContentQueryHandler : IRequestHandler<GetPublicHomeCon
                 AboutContent = h.AboutContent,
                 SidebarLinks = h.SidebarLinks,
                 HeroImagePath = h.HeroImagePath,
-                ProfileImagePath = h.ProfileImagePath
+                ProfileImagePath = h.ProfileImagePath,
+                HuronTitle = h.HuronTitle,
+                HuronImagePath = h.HuronImagePath,
+                SanilacTitle = h.SanilacTitle,
+                SanilacImagePath = h.SanilacImagePath,
+                TuscolaTitle = h.TuscolaTitle,
+                TuscolaImagePath = h.TuscolaImagePath
             })
             .FirstOrDefaultAsync(cancellationToken);
 
