@@ -11,6 +11,10 @@ public partial class Editor
     private IAdminHomeService AdminHomeService { get; set; } = default!;
 
     protected HomeState State { get; set; } = new();
+    
+    protected bool IsSaving { get; set; }
+    protected string? SaveMessage { get; set; }
+    protected bool IsError { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -24,16 +28,43 @@ public partial class Editor
 
     private async Task SaveChanges()
     {
-        var request = new UpdateHomeContentRequest
-        {
-            SiteTitle = State.SiteTitle,
-            Tagline = State.Tagline,
-            AboutContent = State.AboutContent,
-            HeroImagePath = State.HeroImagePath,
-            ProfileImagePath = State.ProfileImagePath,
-            SidebarLinks = State.SidebarLinks
-        };
+        IsSaving = true;
+        SaveMessage = "Saving changes...";
+        IsError = false;
+        StateHasChanged();
 
-        await AdminHomeService.UpdateHomeContentAsync(request);
+        try
+        {
+            var request = new UpdateHomeContentRequest
+            {
+                SiteTitle = State.SiteTitle,
+                Tagline = State.Tagline,
+                AboutContent = State.AboutContent,
+                HeroImagePath = State.HeroImagePath,
+                ProfileImagePath = State.ProfileImagePath,
+                SidebarLinks = State.SidebarLinks
+            };
+
+            await AdminHomeService.UpdateHomeContentAsync(request);
+            SaveMessage = "Changes saved successfully.";
+        }
+        catch (Exception)
+        {
+            IsError = true;
+            SaveMessage = "Failed to save changes. Please try again.";
+        }
+        finally
+        {
+            IsSaving = false;
+            StateHasChanged();
+            
+            // Clear success message after a delay
+            if (!IsError)
+            {
+                await Task.Delay(3000);
+                SaveMessage = null;
+                StateHasChanged();
+            }
+        }
     }
 }

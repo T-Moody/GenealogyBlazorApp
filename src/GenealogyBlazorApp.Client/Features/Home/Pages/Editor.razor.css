@@ -1,0 +1,140 @@
+/* Vintage Theme Variables */
+.vintage-editor {
+    --primary-vintage: #8D6E63;
+    --primary-vintage-hover: #6D4C41;
+    --background-parchment: #F5F5DC;
+    --text-heritage: #3E2723;
+    --accent-sepia: #B8860B;
+    --border-radius-vintage: 4px;
+    --paper-shadow: 0 4px 6px -1px rgba(62, 39, 35, 0.1), 0 2px 4px -1px rgba(62, 39, 35, 0.06);
+    
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: var(--text-heritage);
+    background-color: var(--background-parchment);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Sticky Header */
+.editor-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #FEFDF0; /* Lighter parchment */
+    border-bottom: 1px solid var(--primary-vintage);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--paper-shadow);
+    margin-bottom: 2rem;
+}
+
+.editor-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--text-heritage);
+}
+
+/* Vintage Button */
+.btn-vintage {
+    background-color: var(--primary-vintage);
+    color: #FEFDF0;
+    border: 1px solid #5D4037;
+    border-radius: var(--border-radius-vintage);
+    padding: 0.5rem 1.5rem;
+    font-family: 'Georgia', serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 2px 2px 0 #5D4037;
+}
+
+.btn-vintage:hover {
+    background-color: var(--primary-vintage-hover);
+    transform: translateY(-1px);
+    box-shadow: 3px 3px 0 #5D4037;
+    color: #fff;
+}
+
+.btn-vintage:active {
+    transform: translateY(1px);
+    box-shadow: 1px 1px 0 #5D4037;
+}
+
+.btn-vintage:disabled {
+    background-color: #A1887F;
+    border-color: #8D6E63;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Feedback Messages */
+.feedback-message {
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-vintage);
+    font-style: italic;
+    animation: fadeIn 0.3s ease;
+}
+
+.feedback-success {
+    background-color: rgba(139, 195, 74, 0.2);
+    color: #33691E;
+    border: 1px solid #33691E;
+}
+
+.feedback-error {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: #B71C1C;
+    border: 1px solid #B71C1C;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(245, 245, 220, 0.7); /* Parchment with opacity */
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(2px);
+}
+
+.spinner-vintage {
+    width: 3rem;
+    height: 3rem;
+    border: 4px solid var(--primary-vintage);
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Content Area */
+.editor-content {
+    padding: 0 2rem 2rem;
+}
+
+/* Card/Section Styling */
+::deep .card, ::deep .section {
+    background-color: #fff;
+    border: 1px solid #D7CCC8;
+    box-shadow: var(--paper-shadow);
+    border-radius: var(--border-radius-vintage);
+}
