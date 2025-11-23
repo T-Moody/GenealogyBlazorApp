@@ -53,7 +53,7 @@ For the given feature:
 **IMPORTANT CONSTRAINTS**
 
 - Stay **technology-agnostic**:
-  - Do NOT mention specific frameworks (Blazor, React, EF, controllers, etc.).
+  - Do NOT mention specific frameworks (Blazor, React, EF, minimal api, etc.).
   - Use terms like “frontend UI”, “backend operations”, “data models”.
 - Use headings and bullet lists for clarity.
 - Make sure the feature file reads like a **ready-to-implement spec** for an engineer.

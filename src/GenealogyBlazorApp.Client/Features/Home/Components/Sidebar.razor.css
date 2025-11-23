@@ -1,0 +1,51 @@
+.profile-image-container {
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    background: #fff;
+    box-shadow: var(--shadow-paper);
+    transform: rotate(2deg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.profile-image-container img {
+    display: block;
+    filter: sepia(0.4) contrast(1.1);
+    max-width: 150px;
+}
+
+.profile-image-caption {
+    font-family: var(--font-script);
+    font-size: 1.2rem;
+    color: var(--color-ink-light);
+    text-align: center;
+    margin-top: 5px;
+}
+
+::deep .county-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+::deep .county-list li {
+    border-bottom: 1px dashed var(--color-parchment-border);
+}
+
+::deep .county-list li:last-child {
+    border-bottom: none;
+}
+
+::deep .county-list a {
+    display: block;
+    padding: var(--spacing-sm) 0;
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    border-bottom: none;
+}
+
+::deep .county-list a:hover {
+    color: var(--color-sepia);
+    padding-left: 5px;
+}

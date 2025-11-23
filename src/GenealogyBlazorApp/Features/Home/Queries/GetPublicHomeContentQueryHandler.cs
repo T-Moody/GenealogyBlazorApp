@@ -21,9 +21,8 @@ public class GetPublicHomeContentQueryHandler : IRequestHandler<GetPublicHomeCon
     {
         _logger.LogInformation("Fetching public home content");
 
-        var homeContent = await _context.HomeContent
+        var homeContent = await _context.Home
             .AsNoTracking()
-            .Where(h => h.IsActive)
             .OrderByDescending(h => h.UpdatedAt)
             .Select(h => new PublicHomeContentDto
             {

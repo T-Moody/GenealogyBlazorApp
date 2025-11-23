@@ -1,0 +1,10 @@
+.home-editor .editable-section {
+    border: 1px dashed #ccc;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.home-editor .editable-section:hover {
+    background-color: #f9f9f9;
+}

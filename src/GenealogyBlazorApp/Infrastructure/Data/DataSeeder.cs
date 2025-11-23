@@ -23,18 +23,22 @@ namespace GenealogyBlazorApp.Infrastructure.Data
                 await dbContext.Database.MigrateAsync();
 
                 // Seed Home Content
-                if (!await dbContext.HomeContent.AnyAsync())
+                if (!await dbContext.Home.AnyAsync())
                 {
-                    var homeContent = new HomeContent
+                    var homeContent = new Home
                     {
                         SiteTitle = "Thumb of Michigan Genealogy",
                         Tagline = "Discovering Your Roots in Michigan's Thumb",
                         AboutContent = "Welcome to your genealogy journey! This site is dedicated to helping you explore the rich history of families in the Thumb of Michigan. Our resources and tutorials are designed to guide you, whether you're a beginner or an experienced researcher.",
-                        SidebarLinks = "[]", // Empty JSON array for links
+                        SidebarLinks = @"<ul class=""county-list"">
+                            <li><a href=""#"">Huron County Records</a></li>
+                            <li><a href=""#"">Tuscola County Archives</a></li>
+                            <li><a href=""#"">Sanilac County History</a></li>
+                        </ul>", // Empty JSON array for links
                         HeroImagePath = "/images/hero-image-thumb.png",
                         ProfileImagePath = "/images/profile-image.jpg"
                     };
-                    await dbContext.HomeContent.AddAsync(homeContent);
+                    await dbContext.Home.AddAsync(homeContent);
                     await dbContext.SaveChangesAsync();
                 }
 

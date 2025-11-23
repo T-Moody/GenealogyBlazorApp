@@ -1,9 +1,11 @@
-@page "/"
+@page "/admin/home/editor"
 @rendermode InteractiveAuto
 @using GenealogyBlazorApp.Client.Features.Home.Components
 @using GenealogyBlazorApp.Client.Features.Home.Models
 
-<PageTitle>@(State.IsLoading ? "Genealogy - Home" : State.SiteTitle)</PageTitle>
+<PageTitle>Admin - Home Page Editor</PageTitle>
+
+<h3>Home Page Editor</h3>
 
 @if (State.IsLoading)
 {
@@ -11,22 +13,25 @@
         <div class="spinner-border text-secondary" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
-        <p class="mt-2 text-muted"><em>Consulting the archives...</em></p>
+        <p class="mt-2 text-muted"><em>Loading editor...</em></p>
     </div>
 }
 else
 {
-    <div class="container-fluid px-0">
-        <HomeHero State="State" />
+    <div class="container-fluid">
+        <HomeHero State="State" IsEditor="true" />
 
         <div class="row" id="content-start">
             <div class="col-md-8">
-                <AboutSection State="State" />
+                <AboutSection State="State" IsEditor="true" />
             </div>
             <div class="col-md-4">
-                <Sidebar State="State" />
+                <Sidebar State="State" IsEditor="true" />
             </div>
+        </div>
+
+        <div class="mt-4 text-end">
+            <button class="btn btn-primary" @onclick="SaveChanges">Save Changes</button>
         </div>
     </div>
 }
-

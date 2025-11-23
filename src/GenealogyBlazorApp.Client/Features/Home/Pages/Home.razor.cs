@@ -1,20 +1,23 @@
-using GenealogyBlazorApp.Shared.DTOs;
+using GenealogyBlazorApp.Client.Features.Home.Models;
 using GenealogyBlazorApp.Shared.Services;
 using Microsoft.AspNetCore.Components;
-using System.Threading.Tasks;
 
-namespace GenealogyBlazorApp.Client.Features.Home.Pages
+namespace GenealogyBlazorApp.Client.Features.Home.Pages;
+
+public partial class Home
 {
-    public partial class Home
+    [Inject]
+    private IPublicHomeService PublicHomeService { get; set; } = default!;
+
+    protected HomeState State { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
     {
-        [Inject]
-        private IPublicHomeService PublicHomeService { get; set; } = default!;
-
-        private PublicHomeContentDto? content;
-
-        protected override async Task OnInitializedAsync()
+        var content = await PublicHomeService.GetPublicHomeContentAsync();
+        if (content is not null)
         {
-            content = await PublicHomeService.GetPublicHomeContentAsync();
+            State.FromDto(content);
+            State.IsLoading = false;
         }
     }
 }

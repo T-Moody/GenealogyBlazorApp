@@ -3,7 +3,7 @@ namespace GenealogyBlazorApp.Infrastructure.Data.Entities;
 /// <summary>
 /// Homepage content entity for managing editable homepage sections
 /// </summary>
-public class HomeContent : BaseEntity
+public class Home : BaseEntity
 {
     public string SiteTitle { get; set; } = string.Empty;
     

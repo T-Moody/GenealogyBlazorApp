@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GenealogyBlazorApp.Infrastructure.Data.Configurations;
 
-public class HomeContentConfiguration : IEntityTypeConfiguration<HomeContent>
+public class HomeConfiguration : IEntityTypeConfiguration<Home>
 {
-    public void Configure(EntityTypeBuilder<HomeContent> builder)
+    public void Configure(EntityTypeBuilder<Home> builder)
     {
-        builder.ToTable("HomeContent");
+        builder.ToTable("Home");
         
         builder.HasKey(h => h.Id);
         

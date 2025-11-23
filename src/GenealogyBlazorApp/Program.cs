@@ -62,7 +62,6 @@ builder.Services.AddHttpContextAccessor();
 
 // Register the shared service for both server and client
 builder.Services.AddScoped<GenealogyBlazorApp.Shared.Services.IPublicHomeService, GenealogyBlazorApp.Services.PublicHomeService>();
-builder.Services.AddScoped<GenealogyBlazorApp.Shared.Services.IHomeService, GenealogyBlazorApp.Services.HomeService>();
 
 var app = builder.Build();
 

@@ -180,7 +180,7 @@ You are a lean planning agent focused on task breakdown and implementation plann
 
 - [ ] API contract definition (backend-architect)
 - [ ] Request/response model creation (backend-architect)
-- [ ] Basic controller setup (csharp-developer)
+- [ ] Basic minimal setup (csharp-developer)
 
 **Deliverables**:
 
@@ -201,7 +201,7 @@ You are a lean planning agent focused on task breakdown and implementation plann
    - Error handling
 
 2. **API Implementation** (backend-architect + csharp-developer)
-   - Controller implementation
+   - minimal implementation
    - Integration with business services
    - API testing
 

@@ -232,7 +232,7 @@ You are a lean development coordination agent focused on implementation manageme
 
 1. Service interface definition
 2. Business logic implementation
-3. API controller setup
+3. Minimal api setup
 4. Integration service coordination
 
 **Integration Points**:
@@ -510,7 +510,7 @@ You are a lean development coordination agent focused on implementation manageme
 - **Entity Models**: [Validation status]
 - **Repository Integration**: [Status]
 - **Service Layer**: [Status]
-- **API Controllers**: [Status]
+- **Minimal API**: [Status]
 
 ### API to Frontend
 

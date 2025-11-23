@@ -25,7 +25,7 @@ public static class HomeEndpoints
 
         group.MapGet("/admin", async (IMediator mediator) =>
         {
-            var result = await mediator.Send(new GetHomeContentQuery());
+            var result = await mediator.Send(new GetPublicHomeContentQuery());
             return result is not null ? Results.Ok(result) : Results.NotFound();
         })
         .WithName("GetAdminHomeContent")
@@ -33,14 +33,15 @@ public static class HomeEndpoints
         .Produces(404);
         //.RequireAuthorization("Admin"); // TODO: Add authorization
 
-        group.MapPut("/admin", async ([FromBody] UpdateHomeContentCommand command, IMediator mediator) =>
-        {
-            var result = await mediator.Send(command);
-            return result.IsSuccess ? Results.Ok() : Results.BadRequest(result.Error);
-        })
-        .WithName("UpdateHomeContent")
-        .Produces(200)
-        .Produces(400);
+        // This is now handled by AdminHomeEndpoints.cs
+        //group.MapPut("/admin", async ([FromBody] UpdateHomeContentCommand command, IMediator mediator) =>
+        //{
+        //    await mediator.Send(command);
+        //    return Results.NoContent();
+        //})
+        //.WithName("UpdateHomeContent")
+        //.Produces(204)
+        //.Produces(400);
         //.RequireAuthorization("Admin"); // TODO: Add authorization
     }
 }

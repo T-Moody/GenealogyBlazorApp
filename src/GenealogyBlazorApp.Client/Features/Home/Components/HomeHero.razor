@@ -1,0 +1,35 @@
+@using GenealogyBlazorApp.Client.Features.Home.Models
+
+@if(IsEditor)
+{
+    <div class="mb-3">
+        <label for="siteTitle" class="form-label">Site Title</label>
+        <input type="text" id="siteTitle" class="form-control" @bind="State.SiteTitle" />
+    </div>
+    <div class="mb-3">
+        <label for="tagline" class="form-label">Tagline</label>
+        <input type="text" id="tagline" class="form-control" @bind="State.Tagline" />
+    </div>
+    <div class="mb-3">
+        <label for="heroImage" class="form-label">Hero Image Path</label>
+        <input type="text" id="heroImage" class="form-control" @bind="State.HeroImagePath" />
+    </div>
+}
+else
+{
+    <div class="hero-section">
+        @if (!string.IsNullOrEmpty(State.HeroImagePath))
+        {
+            <div class="hero-image-container">
+                <img src="@State.HeroImagePath" alt="Hero Image for @State.SiteTitle" class="img-fluid" />
+            </div>
+        }
+        
+        <h1 class="hero-title">@State.SiteTitle</h1>
+        <p class="hero-tagline">@State.Tagline</p>
+        
+        <div class="scroll-indicator">
+            <a href="#content-start" class="scroll-icon" aria-label="Scroll to content">❧</a>
+        </div>
+    </div>
+}

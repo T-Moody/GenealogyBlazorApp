@@ -16,7 +16,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Tutorial> Tutorials { get; set; } = null!;
     public DbSet<Resource> Resources { get; set; } = null!;
     public DbSet<ResourceCounty> ResourceCounties { get; set; } = null!;
-    public DbSet<HomeContent> HomeContent { get; set; } = null!;
+    public DbSet<Home> Home { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -91,14 +91,15 @@ dotnet ef database update --project src/GenealogyBlazorApp
 - [x] Non-Functional Requirements Document
 - [x] Development Ledger established
 
-### Phase 2: Architecture & Design 🔄 NEXT
-- [ ] System architecture implementation
-- [ ] Database schema creation
-- [ ] Core infrastructure setup
-- [ ] Authentication system setup
+### Phase 2: Architecture & Design ✅ COMPLETE
+- [x] System architecture implementation
+- [x] Database schema creation
+- [x] Core infrastructure setup
+- [x] Authentication system setup
 
-### Phase 3: Core Development 📋 PLANNED
+### Phase 3: Core Development 🔄 IN PROGRESS
 - [ ] Feature implementation (vertical slices)
+  - [ ] Home Feature (In Progress)
 - [ ] Admin interface development
 - [ ] Public site development
 - [ ] Integration testing
@@ -112,7 +113,7 @@ dotnet ef database update --project src/GenealogyBlazorApp
 - [Non-Functional Requirements](requirements/03_NON_FUNCTIONAL_REQUIREMENTS.md)
 
 ### Development Resources
-- [Development Ledger](DEVELOPMENT_LEDGER.md) - Project progress tracking
+- [Development Ledger](docs/DEVELOPMENT_LEDGER.md) - Project progress tracking
 - [GitHub Copilot Instructions](.github/copilot-instructions.md) - AI coding assistant context
 
 ## 🎨 Design Principles
@@ -165,6 +166,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Status**: Phase 1 Complete - Ready for Phase 2 Architecture & Design  
-**Last Updated**: November 21, 2025  
-**Next Milestone**: Core infrastructure implementation
+**Status**: Phase 3 Core Development - Feature Implementation  
+**Last Updated**: November 22, 2025  
+**Next Milestone**: Home Feature Completion
