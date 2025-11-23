@@ -1,0 +1,18 @@
+@using GenealogyBlazorApp.Client.Features.Home.Models
+
+<div class="resource-card">
+    <div class="card-body text-center p-4">
+        <div class="icon-wrapper mb-3">
+            <span class="vintage-icon">🏛️</span>
+        </div>
+        <h5 class="card-title vintage-font mb-3">@Link.Title</h5>
+        <div class="card-divider mb-3"></div>
+        <p class="card-text text-muted small mb-4">External Repository</p>
+        <a href="@Link.Url" target="_blank" class="btn btn-vintage-outline stretched-link">Visit Archive</a>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public LinkModel Link { get; set; } = default!;
+}

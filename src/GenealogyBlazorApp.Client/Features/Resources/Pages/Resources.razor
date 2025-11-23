@@ -1,0 +1,64 @@
+@page "/resources"
+@rendermode InteractiveAuto
+@using GenealogyBlazorApp.Client.Features.Home.Models
+@using GenealogyBlazorApp.Client.Features.Resources.Components
+@using GenealogyBlazorApp.Shared.Services
+@inject IPublicHomeService PublicHomeService
+
+<PageTitle>Genealogy Resources - The Archives</PageTitle>
+
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h1 class="vintage-header display-4">The Archives</h1>
+        <p class="lead text-muted vintage-text">Curated collections and external repositories for your research.</p>
+        <div class="vintage-divider">❧</div>
+    </div>
+
+    @if (IsLoading)
+    {
+        <div class="text-center mt-5">
+            <div class="spinner-border text-secondary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-muted"><em>Retrieving records...</em></p>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var link in Links)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <ResourceCard Link="link" />
+                </div>
+            }
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="/" class="btn btn-link text-muted text-decoration-none">← Return to Home</a>
+        </div>
+    }
+</div>
+
+@code {
+    private bool IsLoading = true;
+    private List<LinkModel> Links = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try 
+        {
+            var content = await PublicHomeService.GetPublicHomeContentAsync();
+            if (content != null)
+            {
+                var state = new HomeState();
+                state.FromDto(content);
+                Links = state.Links;
+            }
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+}

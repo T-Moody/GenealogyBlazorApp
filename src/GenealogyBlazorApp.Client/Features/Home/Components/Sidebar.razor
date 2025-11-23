@@ -26,19 +26,35 @@
 
 <div class="sidebar-section mt-5">
     <h4 class="text-center mb-3 vintage-header">Resources</h4>
-    <ul class="list-unstyled text-center sidebar-links">
-        @foreach (var link in State.Links)
-        {
-            <li class="mb-2">
-                <a href="@link.Url" target="_blank" class="vintage-link">@link.Title</a>
-            </li>
-        }
-    </ul>
+    
+    @if (!IsEditor)
+    {
+        <div class="text-center">
+            <p class="text-muted small mb-3">Explore our curated collection of external genealogy repositories.</p>
+            <a href="resources" class="btn btn-vintage-outline btn-sm">View Archives</a>
+        </div>
+    }
+    else
+    {
+        <ul class="list-unstyled text-center sidebar-links opacity-50">
+            @foreach (var link in State.Links.Take(3))
+            {
+                <li class="mb-2">
+                    <span class="vintage-link">@link.Title</span>
+                </li>
+            }
+            @if (State.Links.Count > 3)
+            {
+                <li class="text-muted small">...and @(State.Links.Count - 3) more</li>
+            }
+        </ul>
+    }
 
     @if (IsEditor)
     {
         <div class="mt-3 p-3 border rounded bg-light text-start">
-            <h6 class="text-center mb-3">Edit Links</h6>
+            <h6 class="text-center mb-3">Edit Resource Links</h6>
+            <p class="small text-muted text-center mb-2">These links appear on the Resources page.</p>
             @foreach (var link in State.Links)
             {
                 <div class="mb-2 row g-1">

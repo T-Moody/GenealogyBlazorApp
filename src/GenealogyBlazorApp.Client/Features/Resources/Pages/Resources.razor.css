@@ -1,0 +1,16 @@
+.vintage-header {
+    font-family: 'Playfair Display', serif;
+    color: #3E2723;
+    letter-spacing: 1px;
+}
+
+.vintage-text {
+    font-family: 'Crimson Text', serif;
+    font-style: italic;
+}
+
+.vintage-divider {
+    font-size: 2rem;
+    color: #B8860B;
+    margin-top: 1rem;
+}
