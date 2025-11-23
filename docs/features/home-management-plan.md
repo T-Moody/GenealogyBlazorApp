@@ -3,7 +3,7 @@
 ## Status and Overview
 
 **Feature Name**: Home Page Management  
-**Status**: Planning  
+**Status**: In Progress  
 **Priority**: High  
 **Estimated Effort**: 2-3 days  
 **Target Completion**: TBD  
@@ -21,11 +21,11 @@ Provide admin users with the ability to manage homepage content including site t
 
 ### Functional Requirements
 1. **Content Management Interface**
-   - Admin-only access to homepage content editor
-   - WYSIWYG editor for about content with rich text support
+   - Admin-only access to homepage content editor via `/admin/home/editor`
+   - Inline editing experience: Admin sees the page exactly as it renders publicly, but with editable fields
+   - Shared components between public and admin views to ensure consistency
    - Image upload and management for hero/profile images
-   - Preview functionality before publishing changes
-   - Audit trail of content changes
+   - Preview functionality is inherent in the inline editor design
 
 2. **Homepage Display**
    - Public homepage displays current active content
@@ -50,6 +50,7 @@ Provide admin users with the ability to manage homepage content including site t
 - Integrates with ASP.NET Core Identity for admin auth
 - Follows vertical slice architecture pattern
 - Uses MediatR for CQRS commands/queries
+- **Client-Side**: Reuses Blazor components with an `IsEditor` parameter to toggle between view and edit modes
 
 ## Design Decisions
 
@@ -65,11 +66,11 @@ Provide admin users with the ability to manage homepage content including site t
 **Alternatives**: Separate records per section, key-value store
 **Consequences**: Simplified queries but larger record updates
 
-### ADR-005: Preview Before Publish Pattern
-**Context**: Avoid accidental content publication
-**Decision**: Separate staging/preview from published content
-**Alternatives**: Immediate publish, approval workflow
-**Consequences**: Additional complexity but safer content management
+### ADR-006: Inline Admin Editing with Shared Components
+**Context**: We want the admin editing experience to closely match the public view to reduce "preview" cycles and ensure visual consistency.
+**Decision**: Use the same Blazor components (`HomeHero`, `AboutSection`, `Sidebar`) for both public and admin pages. These components accept an `IsEditor` parameter. When `true`, they render input fields; when `false`, they render display content.
+**Alternatives**: Separate admin form components, "Edit" mode on public page.
+**Consequences**: Reduces code duplication, ensures WYSIWYG experience, but requires components to handle two modes.
 
 ## Implementation Plan
 
@@ -78,7 +79,7 @@ Provide admin users with the ability to manage homepage content including site t
 *Following Vertical Slice Architecture with MediatR CQRS pattern*
 
 #### Data Layer
-- [ ] Review existing HomeContent entity (already created)
+- [x] Review existing HomeContent entity (already created)
 - [ ] Add HomeContentConfiguration for any missing constraints
 - [ ] Create MediatR handlers with direct DbContext access
 - [ ] Add audit logging for content changes
@@ -89,10 +90,9 @@ Provide admin users with the ability to manage homepage content including site t
 - [ ] Create GetPublicHomeContentQuery and Handler
 - [ ] Add FluentValidation rules for HomeContent commands
 - [ ] Create HomeContent feature endpoints:
-  - `GET /api/admin/home-content` - Get current content
-  - `PUT /api/admin/home-content` - Update content
-  - `POST /api/admin/home-content/preview` - Preview content
-  - `GET /api/home-content/public` - Get published content
+  - `GET /api/home-content/public` - Get published content (Implemented in `HomeEndpoints.cs`)
+  - `GET /api/home-content/admin` - Get content for admin (Implemented in `HomeEndpoints.cs`)
+  - `PUT /api/home-content/admin` - Update content (To be implemented in `AdminHomeEndpoints.cs`)
 
 #### Security & Validation
 - [ ] Add [Authorize] attributes for admin endpoints
@@ -103,21 +103,23 @@ Provide admin users with the ability to manage homepage content including site t
 ### Frontend Tasks (blazor-developer, ui-design-specialist)
 
 #### Admin Components
-- [ ] Create AdminLayout for admin pages
-- [ ] Create HomeContentEditor.razor component
-  - Rich text editor integration (Quill.js)
-  - Image upload components
-  - Form validation display
-  - Preview functionality
-- [ ] Create HomeContentAdmin.razor page (`/admin/home`)
+- [x] Create `Editor.razor` page (`/admin/home/editor`)
+  - Uses shared components with `IsEditor="true"`
+  - Calls `AdminHomeService` to save changes
+- [ ] Implement `AdminHomeService` client-side service
 - [ ] Add admin navigation menu item
 
-#### Public Components  
-- [ ] Create or update Home.razor page for public view
-- [ ] Create HomeHero.razor component for hero section
-- [ ] Create AboutSection.razor component
-- [ ] Create SidebarLinks.razor component
-- [ ] Ensure responsive design with vintage theme
+#### Shared Components (Public & Admin)
+- [x] Create `HomeHero.razor` component
+  - Support `IsEditor` parameter
+  - Render inputs in edit mode, text/image in view mode
+- [x] Create `AboutSection.razor` component
+  - Support `IsEditor` parameter
+  - Integrate Rich Text Editor (Quill) for edit mode
+- [x] Create `Sidebar.razor` component
+  - Support `IsEditor` parameter
+- [x] Create `Home.razor` page for public view (`/`)
+  - Uses shared components with `IsEditor="false"`
 
 #### Styling & Theme
 - [ ] Apply vintage/historical CSS classes

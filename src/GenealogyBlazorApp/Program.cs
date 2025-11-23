@@ -2,6 +2,7 @@ using GenealogyBlazorApp.Client.Pages;
 using GenealogyBlazorApp.Components;
 using GenealogyBlazorApp.Infrastructure.Data;
 using GenealogyBlazorApp.Infrastructure.Data.Entities;
+using GenealogyBlazorApp.Features.Home;
 using GenealogyBlazorApp.Features.Home.Endpoints;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -93,6 +94,7 @@ app.MapRazorComponents<App>()
     .AddAdditionalAssemblies(typeof(GenealogyBlazorApp.Client._Imports).Assembly);
 
 app.MapHomeEndpoints();
+app.MapAdminHomeEndpoints();
 
 // Seed the database
 await DataSeeder.SeedDataAsync(app);
