@@ -1,35 +1,41 @@
 @using GenealogyBlazorApp.Client.Features.Home.Models
 
-@if(IsEditor)
-{
-    <div class="mb-3">
-        <label for="siteTitle" class="form-label">Site Title</label>
-        <input type="text" id="siteTitle" class="form-control" @bind="State.SiteTitle" />
-    </div>
-    <div class="mb-3">
-        <label for="tagline" class="form-label">Tagline</label>
-        <input type="text" id="tagline" class="form-control" @bind="State.Tagline" />
-    </div>
-    <div class="mb-3">
-        <label for="heroImage" class="form-label">Hero Image Path</label>
-        <input type="text" id="heroImage" class="form-control" @bind="State.HeroImagePath" />
-    </div>
-}
-else
-{
-    <div class="hero-section">
-        @if (!string.IsNullOrEmpty(State.HeroImagePath))
-        {
-            <div class="hero-image-container">
-                <img src="@State.HeroImagePath" alt="Hero Image for @State.SiteTitle" class="img-fluid" />
-            </div>
-        }
-        
+<div class="hero-section">
+    @if (IsEditor)
+    {
+        <div class="mb-3">
+            <label class="form-label small text-muted">Hero Image Path</label>
+            <input type="text" class="form-control form-control-sm" @bind="State.HeroImagePath" placeholder="/images/hero-default.jpg" />
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(State.HeroImagePath))
+    {
+        <div class="hero-image-container">
+            <img src="@State.HeroImagePath" alt="Hero Image for @State.SiteTitle" class="img-fluid" />
+        </div>
+    }
+    else if (IsEditor)
+    {
+        <div class="hero-image-placeholder">
+            <p class="text-muted">No hero image selected</p>
+        </div>
+    }
+    
+    @if (IsEditor)
+    {
+        <div class="edit-wrapper">
+            <input type="text" class="hero-title-input" @bind="State.SiteTitle" placeholder="Site Title" />
+            <input type="text" class="hero-tagline-input" @bind="State.Tagline" placeholder="Tagline" />
+        </div>
+    }
+    else
+    {
         <h1 class="hero-title">@State.SiteTitle</h1>
         <p class="hero-tagline">@State.Tagline</p>
-        
-        <div class="scroll-indicator">
-            <a href="#content-start" class="scroll-icon" aria-label="Scroll to content">❧</a>
-        </div>
+    }
+    
+    <div class="scroll-indicator">
+        <a href="#content-start" class="scroll-icon" aria-label="Scroll to content">❧</a>
     </div>
-}
+</div>

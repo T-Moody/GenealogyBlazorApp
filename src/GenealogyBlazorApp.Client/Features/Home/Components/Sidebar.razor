@@ -1,32 +1,45 @@
 @using GenealogyBlazorApp.Client.Features.Home.Models
 
-@if(IsEditor)
-{
-    <div class="mb-3">
-        <label for="profileImage" class="form-label">Profile Image Path</label>
-        <input type="text" id="profileImage" class="form-control" @bind="State.ProfileImagePath" />
-    </div>
-    <div class="mb-3">
-        <label for="sidebarLinks" class="form-label">Sidebar Links (HTML)</label>
-        <textarea id="sidebarLinks" class="form-control" rows="5" @bind="State.SidebarLinks"></textarea>
-    </div>
-}
-else
-{
-    <div class="text-center mb-4">
-        <div class="profile-image-container">
+<div class="text-center mb-4">
+    <div class="profile-image-container">
+        @if (!string.IsNullOrEmpty(State.ProfileImagePath))
+        {
             <img src="@State.ProfileImagePath" alt="Profile Image" class="img-fluid rounded-circle" />
-            <div class="profile-image-caption">The Archivist</div>
-        </div>
+        }
+        else if (IsEditor)
+        {
+             <div class="profile-placeholder rounded-circle d-flex align-items-center justify-content-center" style="width: 150px; height: 150px; background: #eee; border: 2px dashed #ccc;">
+                <span class="text-muted">No Image</span>
+            </div>
+        }
+        
+        <div class="profile-image-caption">The Archivist</div>
     </div>
+    
+    @if (IsEditor)
+    {
+        <div class="mt-2">
+            <input type="text" class="form-control form-control-sm text-center" @bind="State.ProfileImagePath" placeholder="Profile Image Path" />
+        </div>
+    }
+</div>
 
-    <div class="card-vintage">
-        <div class="card-vintage-header">
-            <span>County Resources</span>
-            <span class="text-gold">❖</span>
-        </div>
-        <div class="card-vintage-body">
-            @((MarkupString)State.SidebarLinks)
-        </div>
+<div class="card-vintage">
+    <div class="card-vintage-header">
+        <span>County Resources</span>
+        <span class="text-gold">❖</span>
     </div>
-}
+    <div class="card-vintage-body">
+        @if (IsEditor)
+        {
+            <textarea class="form-control vintage-textarea" rows="10" @bind="State.SidebarLinks" placeholder="Enter links (HTML)..."></textarea>
+             <div class="form-text text-muted mt-2">
+                <small>Use &lt;ul class="county-list"&gt;...&lt;/ul&gt;</small>
+            </div>
+        }
+        else
+        {
+            @((MarkupString)State.SidebarLinks)
+        }
+    </div>
+</div>

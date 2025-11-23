@@ -11,16 +11,23 @@ public static class AdminHomeEndpoints
     {
         var group = app.MapGroup("/api/home-content/admin").WithTags("Admin Home Content");
 
-        group.MapGet("/", async (IMediator mediator) =>
+        group.MapGet("", async (IMediator mediator) =>
         {
-            var result = await mediator.Send(new GenealogyBlazorApp.Features.Home.Queries.GetHomeContentQuery());
-            return result is not null ? Results.Ok(result) : Results.NotFound();
+            try 
+            {
+                var result = await mediator.Send(new GenealogyBlazorApp.Features.Home.Queries.GetHomeContentQuery());
+                return result is not null ? Results.Ok(result) : Results.NotFound();
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(detail: ex.ToString(), statusCode: 500);
+            }
         })
         .WithName("GetHomeContent")
         .Produces<HomeContentDto>(200)
         .Produces(404);
 
-        group.MapPut("/", async ([FromBody] UpdateHomeContentRequest request, IMediator mediator) =>
+        group.MapPut("", async ([FromBody] UpdateHomeContentRequest request, IMediator mediator) =>
         {
             await mediator.Send(new UpdateHomeContentCommand(request));
             return Results.NoContent();

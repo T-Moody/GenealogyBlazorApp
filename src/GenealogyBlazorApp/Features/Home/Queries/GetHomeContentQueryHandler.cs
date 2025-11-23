@@ -2,37 +2,48 @@ using GenealogyBlazorApp.Infrastructure.Data;
 using GenealogyBlazorApp.Shared.DTOs;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace GenealogyBlazorApp.Features.Home.Queries;
 
 public class GetHomeContentQueryHandler : IRequestHandler<GetHomeContentQuery, HomeContentDto?>
 {
     private readonly AppDbContext _context;
+    private readonly ILogger<GetHomeContentQueryHandler> _logger;
 
-    public GetHomeContentQueryHandler(AppDbContext context)
+    public GetHomeContentQueryHandler(AppDbContext context, ILogger<GetHomeContentQueryHandler> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     public async Task<HomeContentDto?> Handle(GetHomeContentQuery request, CancellationToken cancellationToken)
     {
-        var home = await _context.Home.AsNoTracking().FirstOrDefaultAsync(cancellationToken);
-
-        if (home is null)
+        try
         {
-            return null;
+            var home = await _context.Home.AsNoTracking().FirstOrDefaultAsync(cancellationToken);
+
+            if (home is null)
+            {
+                return null;
+            }
+
+            return new HomeContentDto
+            {
+                SiteTitle = home.SiteTitle,
+                Tagline = home.Tagline,
+                AboutContent = home.AboutContent,
+                SidebarLinks = home.SidebarLinks,
+                HeroImagePath = home.HeroImagePath,
+                ProfileImagePath = home.ProfileImagePath,
+                LastUpdated = home.UpdatedAt,
+                LastUpdatedBy = home.UpdatedBy ?? string.Empty
+            };
         }
-
-        return new HomeContentDto
+        catch (Exception ex)
         {
-            SiteTitle = home.SiteTitle,
-            Tagline = home.Tagline,
-            AboutContent = home.AboutContent,
-            SidebarLinks = home.SidebarLinks,
-            HeroImagePath = home.HeroImagePath,
-            ProfileImagePath = home.ProfileImagePath,
-            LastUpdated = home.LastUpdated,
-            LastUpdatedBy = home.LastUpdatedBy ?? string.Empty
-        };
+            _logger.LogError(ex, "Error getting home content");
+            throw;
+        }
     }
 }

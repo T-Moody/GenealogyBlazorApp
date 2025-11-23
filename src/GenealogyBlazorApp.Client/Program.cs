@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using GenealogyBlazorApp.Shared.Services;
 using GenealogyBlazorApp.Client.Features.Home.Services;
-using GenealogyBlazorApp.Client.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 

@@ -49,3 +49,11 @@
     color: var(--color-sepia);
     padding-left: 5px;
 }
+
+.vintage-textarea {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px dashed var(--color-sepia);
+    font-family: var(--font-serif);
+    font-size: 1.0rem;
+    color: var(--color-ink);
+}

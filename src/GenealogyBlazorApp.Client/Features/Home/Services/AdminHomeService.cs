@@ -15,7 +15,21 @@ public class AdminHomeService : IAdminHomeService
 
     public async Task<HomeContentDto?> GetHomeContentAsync()
     {
-        return await _httpClient.GetFromJsonAsync<HomeContentDto>("api/home-content/admin");
+        var response = await _httpClient.GetAsync("api/home-content/admin");
+        
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Error getting home content: {response.StatusCode} - {error}");
+            throw new HttpRequestException($"Error getting home content: {response.StatusCode} - {error}");
+        }
+
+        if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+        {
+            return null;
+        }
+
+        return await response.Content.ReadFromJsonAsync<HomeContentDto>();
     }
 
     public async Task UpdateHomeContentAsync(UpdateHomeContentRequest request)

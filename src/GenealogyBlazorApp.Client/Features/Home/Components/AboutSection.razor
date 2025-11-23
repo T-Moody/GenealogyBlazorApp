@@ -1,23 +1,25 @@
 @using GenealogyBlazorApp.Client.Features.Home.Models
 
-@if(IsEditor)
-{
-    <div class="mb-3">
-        <label for="aboutContent" class="form-label">About Content</label>
-        <textarea id="aboutContent" class="form-control" rows="10" @bind="State.AboutContent"></textarea>
+<div class="card-vintage mb-4">
+    <div class="card-vintage-header">
+        <span>About Our History</span>
+        <span class="text-gold">❧</span>
     </div>
-}
-else
-{
-    <div class="card-vintage mb-4">
-        <div class="card-vintage-header">
-            <span>About Our History</span>
-            <span class="text-gold">❧</span>
-        </div>
-        <div class="card-vintage-body">
+    <div class="card-vintage-body">
+        @if (IsEditor)
+        {
+            <div class="about-editor">
+                <textarea class="form-control vintage-textarea" rows="15" @bind="State.AboutContent" placeholder="Enter about content (HTML supported)..."></textarea>
+                <div class="form-text text-muted mt-2">
+                    <small>HTML tags are supported for formatting.</small>
+                </div>
+            </div>
+        }
+        else
+        {
             <div class="about-content">
                 @((MarkupString)State.AboutContent)
             </div>
-        </div>
+        }
     </div>
-}
+</div>
